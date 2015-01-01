@@ -1,6 +1,7 @@
 package controllers;
 
 import cache.RedisManager;
+import models.SingleVideo;
 import play.libs.Json;
 import play.mvc.*;
 
@@ -182,6 +183,53 @@ public class Application extends Controller {
             //return ok(Json.toJson(result));
             return ok(JSON.toJSONString(result));
         }catch (Exception e){
+            e.printStackTrace();
+            result.put("status", "error");
+            return badRequest(Json.toJson(result));
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public static Result cachemodel(Integer id){
+        Jedis jedis = null;
+        try {
+            //int vid = 1;
+            String key = "video-" + id;
+            jedis = jedisPool.getResource();
+            String title = jedis.hget(key, "title");
+            String authorname = jedis.hget(key, "authorname");
+            String videourl = jedis.hget(key, "videourl");
+            String imageurl = jedis.hget(key, "imageurl");
+
+            //System.out.println(title + " - " + authorname + " - " + videourl + " - " + imageurl);
+            return ok(Json.toJson(new SingleVideo(id, title, authorname, videourl, imageurl)));
+        }catch (Exception e){
+            e.printStackTrace();
+            Map<String, Object> result = new HashMap<String, Object>();
+            result.put("status", "error");
+            return badRequest(Json.toJson(result));
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public static Result cachemodelfastjson(Integer id){
+        Jedis jedis = null;
+        try {
+            //int vid = 1;
+            String key = "video-" + id;
+            jedis = jedisPool.getResource();
+            String title = jedis.hget(key, "title");
+            String authorname = jedis.hget(key, "authorname");
+            String videourl = jedis.hget(key, "videourl");
+            String imageurl = jedis.hget(key, "imageurl");
+
+            //System.out.println(title + " - " + authorname + " - " + videourl + " - " + imageurl);
+            //return ok(Json.toJson(result));
+            return ok(JSON.toJSONString(new SingleVideo(id, title, authorname, videourl, imageurl)));
+        }catch (Exception e){
+            Map<String, Object> result = new HashMap<String, Object>();
             e.printStackTrace();
             result.put("status", "error");
             return badRequest(Json.toJson(result));
