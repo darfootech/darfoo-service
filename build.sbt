@@ -10,7 +10,8 @@ libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
   cache,
-  javaWs
+  javaWs,
+  "redis.clients" % "jedis" % "2.6.1",
+  "mysql" % "mysql-connector-java" % "5.1.18",
+  "com.alibaba" % "fastjson" % "1.2.3"
 )
-
-libraryDependencies += "redis.clients" % "jedis" % "2.6.1"
