@@ -114,6 +114,34 @@ public class Application extends Controller {
     }
 
     /*
+    Running 10s test @ http://localhost:9000/cacheindexall/1
+      4 threads and 10 connections
+      Thread Stats   Avg      Stdev     Max   +/- Stdev
+        Latency     0.90ms  838.46us  15.00ms   98.53%
+        Req/Sec     2.35k   373.81     3.11k    82.02%
+      88810 requests in 10.00s, 15.84MB read
+    Requests/sec:   8881.14
+    Transfer/sec:      1.58MB
+    */
+    public static Result cacheindexall(Long id){
+        Jedis jedis = null;
+        try {
+            //int vid = 1;
+            String key = "video-" + id;
+            jedis = jedisPool.getResource();
+
+            Map<String, String> result = jedis.hgetAll(key);
+            //System.out.println(title + " - " + authorname + " - " + videourl + " - " + imageurl);
+            return ok(Json.toJson(result));
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    /*
     Running 10s test @ http://localhost:9000/yacachefast
       4 threads and 10 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
