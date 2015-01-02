@@ -161,6 +161,10 @@ public class Application extends Controller {
         }
     }
 
+    public static Result testredirect(){
+        return redirect("http://localhost:8080/darfoobackend/rest/loadtest/index/nocache");
+    }
+
     /*
     Running 10s test @ http://localhost:9000/yacachefast
       4 threads and 10 connections
