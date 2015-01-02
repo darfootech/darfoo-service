@@ -12,6 +12,7 @@ GET        /cacheindexfast/:id        controllers.Application.cacheindexfastjson
 GET        /cachemodel/:id            controllers.Application.cachemodel(id: Integer)
 GET        /cachemodelfast/:id        controllers.Application.cachemodelfastjson(id: Integer)
 GET        /cacheindexall/:id         controllers.Application.cacheindexall(id: Long)
+GET        /yacacheindexall           controllers.Application.yacacheindexall()
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file              controllers.Assets.at(path="/public", file)

@@ -9,8 +9,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import views.html.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import com.alibaba.fastjson.JSON;
 
@@ -132,6 +131,27 @@ public class Application extends Controller {
 
             Map<String, String> result = jedis.hgetAll(key);
             //System.out.println(title + " - " + authorname + " - " + videourl + " - " + imageurl);
+            return ok(Json.toJson(result));
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public static Result yacacheindexall(){
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            Set<String> latestVideos = jedis.smembers("videoindex");
+            List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+            for (String vkey : latestVideos){
+                //System.out.println("vkey -> " + vkey);
+                Map<String, String> video = jedis.hgetAll(vkey);
+                //System.out.println("title -> " + video.get("title"));
+                result.add(video);
+            }
             return ok(Json.toJson(result));
         }catch (Exception e){
             e.printStackTrace();
