@@ -42,7 +42,7 @@ public class VideoController extends Controller {
         try {
             jedis = jedisPool.getResource();
             if (!jedis.exists("videoindex")){
-                return redirect("http://localhost:8080/darfoobackend/rest/resources/video/cache/index");
+                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/index");
             }else{
                 Set<String> latestVideos = jedis.smembers("videoindex");
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -67,7 +67,7 @@ public class VideoController extends Controller {
         try {
             jedis = jedisPool.getResource();
             if (!jedis.exists("videorecommend")){
-                return redirect("http://localhost:8080/darfoobackend/rest/resources/video/cache/recommend");
+                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/recommend");
             }else{
                 Set<String> latestVideos = jedis.smembers("videorecommend");
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -86,4 +86,31 @@ public class VideoController extends Controller {
             jedisPool.returnResource(jedis);
         }
     }
+
+    public static Result category(String category){
+        Jedis jedis = null;
+        try {
+            String key = "videocategory"+category;
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)){
+                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/category/" + category);
+            }else{
+                Set<String> latestVideos = jedis.smembers(key);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String vkey : latestVideos){
+                    //System.out.println("vkey -> " + vkey);
+                    Map<String, String> video = jedis.hgetAll(vkey);
+                    //System.out.println("title -> " + video.get("title"));
+                    result.add(video);
+                }
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
 }
