@@ -40,10 +40,10 @@ public class MusicController extends Controller {
     public static Result hottestMusic(){
         Jedis jedis = null;
         try {
-            String key = "videoindex";
+            String key = "musichottest";
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/index");
+                return redirect("http://localhost:8080/darfoobackend/rest/cache/music/hottest");
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
