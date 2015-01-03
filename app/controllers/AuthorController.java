@@ -44,13 +44,11 @@ public class AuthorController extends Controller {
             if (!jedis.exists("authorindex")){
                 return redirect("http://localhost:8080/darfoobackend/rest/cache/author/index");
             }else{
-                Set<String> latestVideos = jedis.smembers("authorindex");
+                Set<String> keys = jedis.smembers("authorindex");
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-                for (String vkey : latestVideos){
-                    //System.out.println("vkey -> " + vkey);
-                    Map<String, String> video = jedis.hgetAll(vkey);
-                    //System.out.println("title -> " + video.get("title"));
-                    result.add(video);
+                for (String key : keys){
+                    Map<String, String> item = jedis.hgetAll(key);
+                    result.add(item);
                 }
                 return ok(Json.toJson(result));
             }
@@ -65,13 +63,17 @@ public class AuthorController extends Controller {
     public static Result getVideos(Long id){
         Jedis jedis = null;
         try {
-            String key = "authorvideos-" + id;
+            String key = "authorvideos" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/getmusic/" + id);
+                return redirect("http://localhost:8080/darfoobackend/rest/cache/author/videos/" + id);
             }else{
-                String mkey = "music-" + jedis.get(key);
-                Map<String, String> result = jedis.hgetAll(mkey);
+                Set<String> keys = jedis.smembers(key);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String ikey : keys){
+                    Map<String, String> item = jedis.hgetAll(ikey);
+                    result.add(item);
+                }
                 return ok(Json.toJson(result));
             }
         }catch (Exception e){
