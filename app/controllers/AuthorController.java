@@ -42,7 +42,7 @@ public class AuthorController extends Controller {
         try {
             jedis = jedisPool.getResource();
             if (!jedis.exists("authorindex")){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/index");
+                return redirect("http://localhost:8080/darfoobackend/rest/cache/author/index");
             }else{
                 Set<String> latestVideos = jedis.smembers("authorindex");
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
