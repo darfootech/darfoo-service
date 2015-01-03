@@ -25,6 +25,10 @@ GET        /resources/video/music/:id                    controllers.VideoContro
 GET        /resources/tutorial/:id                       controllers.TutorialController.singleTutorial(id: Long)
 GET        /resources/tutorial/category/:category        controllers.TutorialController.category(category: String)
 
+GET        /resources/music/hottest                      controllers.MusicController.hottestMusic()
+GET        /resources/music/category/:category           controllers.MusicController.category(category: String)
+GET        /resources/music/:id                          controllers.MusicController.singleMusic(id: Long)
+
 GET        /resources/author/index                       controllers.AuthorController.indexAuthors()
 GET        /resources/author/:id                         controllers.AuthorController.singleAuthor(id: Long)
 GET        /resources/author/videos/:id                  controllers.AuthorController.getVideos(id: Long)
