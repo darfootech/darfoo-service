@@ -16,3 +16,4 @@ dist
 *.swp
 .*.swp
 .DS_Store
+*.properties

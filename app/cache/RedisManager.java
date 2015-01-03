@@ -1,5 +1,6 @@
 package cache;
 
+import play.Play;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -9,6 +10,18 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisManager {
     public static JedisPool jedisPool; // 池化管理jedis链接池
 
+    /*static {
+        Play.application().classloader().getResource("redis.properties");
+        int maxActive = Play.application().configuration().getInt("redis.maxActive");
+        System.out.println("maxactive -> " + maxActive);
+        int maxIdle = Play.application().configuration().getInt("redis.maxIdle");
+        int maxWait = Play.application().configuration().getInt("redis.maxWait");
+        String ip = Play.application().configuration().getString("redis.host");
+        int port = Play.application().configuration().getInt("redis.port");
+        String password = Play.application().configuration().getString("redis.pass");
+        int timeout = Play.application().configuration().getInt("redis.timeout");
+    }*/
+
     public static JedisPool getRedisPoolInstance() {
         if (jedisPool == null) {
             int maxActive = 600;
@@ -16,11 +29,13 @@ public class RedisManager {
             int maxWait = 1000;
             String ip = "localhost";
             int port = 6379;
+            String password = "cleantha";
+            int timeout = 20000;
             JedisPoolConfig config = new JedisPoolConfig();
             config.setMaxTotal(maxActive);
             config.setMaxIdle(maxIdle);
             config.setMaxWaitMillis(maxWait);
-            jedisPool = new JedisPool(config, ip, port, 20000, "cleantha");
+            jedisPool = new JedisPool(config, ip, port, timeout, password);
         }
         return jedisPool;
     }
