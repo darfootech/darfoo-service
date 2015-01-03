@@ -21,17 +21,21 @@ GET        /resources/video/recommend                    controllers.VideoContro
 GET        /resources/video/:id                          controllers.VideoController.singleVideo(id: Long)
 GET        /resources/video/category/:category           controllers.VideoController.category(category: String)
 GET        /resources/video/music/:id                    controllers.VideoController.getMusic(id: Long)
+GET        /resources/video/search/:content              controllers.VideoController.search(content: String)
 
 GET        /resources/tutorial/:id                       controllers.TutorialController.singleTutorial(id: Long)
 GET        /resources/tutorial/category/:category        controllers.TutorialController.category(category: String)
+GET        /resources/tutorial/search/:content           controllers.TutorialController.search(content: String)
 
 GET        /resources/music/hottest                      controllers.MusicController.hottestMusic()
 GET        /resources/music/category/:category           controllers.MusicController.category(category: String)
 GET        /resources/music/:id                          controllers.MusicController.singleMusic(id: Long)
+GET        /resources/music/search/:content              controllers.MusicController.search(content: String)
 
 GET        /resources/author/index                       controllers.AuthorController.indexAuthors()
 GET        /resources/author/:id                         controllers.AuthorController.singleAuthor(id: Long)
 GET        /resources/author/videos/:id                  controllers.AuthorController.getVideos(id: Long)
+GET        /resources/author/search/:content             controllers.AuthorController.search(content: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file                                 controllers.Assets.at(path="/public", file)

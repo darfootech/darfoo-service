@@ -7,6 +7,7 @@ import play.mvc.Result;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,30 @@ public class AuthorController extends Controller {
                 for (String ikey : keys){
                     Map<String, String> item = jedis.hgetAll(ikey);
                     result.add(item);
+                }
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public static Result search(String content){
+        Jedis jedis = null;
+        try {
+            String key = "authorsearch" + content;
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)){
+                return redirect("http://localhost:8080/darfoobackend/rest/cache/author/search?search=" + URLEncoder.encode(content, "utf-8"));
+            }else{
+                Set<String> latestVideos = jedis.smembers(key);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String vkey : latestVideos){
+                    Map<String, String> video = jedis.hgetAll(vkey);
+                    result.add(video);
                 }
                 return ok(Json.toJson(result));
             }
