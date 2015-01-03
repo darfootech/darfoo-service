@@ -113,4 +113,24 @@ public class VideoController extends Controller {
         }
     }
 
+    public static Result getMusic(Long id){
+        Jedis jedis = null;
+        try {
+            String key = "videomusic-" + id;
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)){
+                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/getmusic/" + id);
+            }else{
+                String mkey = "music-" + jedis.get(key);
+                Map<String, String> result = jedis.hgetAll(mkey);
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
 }
