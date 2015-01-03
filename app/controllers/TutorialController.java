@@ -24,7 +24,7 @@ public class TutorialController extends Controller {
             String key = "tutorial-" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/tutorial/" + id);
+                return redirect("http://localhost:8080/darfoobackend/rest/resources/video/tutorial/" + id);
             }else{
                 Map<String, String> result = jedis.hgetAll(key);
                 return ok(Json.toJson(result));
@@ -40,11 +40,12 @@ public class TutorialController extends Controller {
     public static Result category(String category){
         Jedis jedis = null;
         try {
+            String key = "tutorialcategory" + category;
             jedis = jedisPool.getResource();
-            if (!jedis.exists("tutorialcategory")){
+            if (!jedis.exists(key)){
                 return redirect("http://localhost:8080/darfoobackend/rest/cache/tutorial/category/" + category);
             }else{
-                Set<String> latestVideos = jedis.smembers("tutorialcategory");
+                Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
                 for (String vkey : latestVideos){
                     //System.out.println("vkey -> " + vkey);

@@ -27,6 +27,5 @@ public class CacheTest {
         }finally {
             jedisPool.returnResource(jedis);
         }
-
     }
 }
