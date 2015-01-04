@@ -10,6 +10,16 @@
 * `activator run` run the service
 * `activator test` run all the test cases
 
+## how to deploy
+
+```
+cd conf/
+cp redis.conf.example redis.conf
+cp backend.conf.example backend.conf
+cd ..
+activator run
+```
+
 ## todo
 
 * use async controller integrate with akka
