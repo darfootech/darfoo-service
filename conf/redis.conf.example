@@ -1,7 +1,7 @@
 redis {
   host=127.0.0.1
   port=6379
-  pass=Darfoo@tech
+  pass="Darfoo@tech"
   timeout=20000
   maxIdle=300
   maxActive=600
