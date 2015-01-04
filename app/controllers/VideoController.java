@@ -69,7 +69,7 @@ public class VideoController extends Controller {
     public static Result recommendVideos(){
         Jedis jedis = null;
         try {
-            String key = "videorecommend";
+            String key = "recommend";
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
                 return redirect(baseUrl + "/cache/video/recommend");
