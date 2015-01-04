@@ -1,6 +1,7 @@
 package controllers;
 
 import cache.RedisManager;
+import persistence.BackendManager;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,6 +19,7 @@ import java.util.Set;
  */
 public class VideoController extends Controller {
     static JedisPool jedisPool = RedisManager.getRedisPoolInstance();
+    static String baseUrl = BackendManager.getBackendBaseUrl();
 
     public static Result singleVideo(Long id){
         Jedis jedis = null;
@@ -25,7 +27,7 @@ public class VideoController extends Controller {
             String key = "video-" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/resources/video/" + id);
+                return redirect(baseUrl + "/resources/video/" + id);
             }else{
                 Map<String, String> result = jedis.hgetAll(key);
                 return ok(Json.toJson(result));
@@ -44,7 +46,7 @@ public class VideoController extends Controller {
             String key = "videoindex";
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/index");
+                return redirect(baseUrl + "/cache/video/index");
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -70,7 +72,7 @@ public class VideoController extends Controller {
             String key = "videorecommend";
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/recommend");
+                return redirect(baseUrl + "/cache/video/recommend");
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -96,7 +98,7 @@ public class VideoController extends Controller {
             String key = "videocategory" + category;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/category/" + category);
+                return redirect(baseUrl + "/cache/video/category/" + category);
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -122,7 +124,7 @@ public class VideoController extends Controller {
             String key = "videomusic-" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/getmusic/" + id);
+                return redirect(baseUrl + "/cache/video/getmusic/" + id);
             }else{
                 String mkey = "music-" + jedis.get(key);
                 Map<String, String> result = jedis.hgetAll(mkey);
@@ -142,7 +144,7 @@ public class VideoController extends Controller {
             String key = "videosearch" + content;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/video/search?search=" + URLEncoder.encode(content, "utf-8"));
+                return redirect(baseUrl + "/cache/video/search?search=" + URLEncoder.encode(content, "utf-8"));
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();

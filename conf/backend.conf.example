@@ -1,0 +1,3 @@
+backend {
+  baseurl="http://112.124.68.27/darfoobackend/rest/cache"
+}

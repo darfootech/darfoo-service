@@ -1,6 +1,7 @@
 package controllers;
 
 import cache.RedisManager;
+import persistence.BackendManager;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,6 +19,7 @@ import java.util.Set;
  */
 public class AuthorController extends Controller {
     static JedisPool jedisPool = RedisManager.getRedisPoolInstance();
+    static String baseUrl = BackendManager.getBackendBaseUrl();
 
     public static Result singleAuthor(Long id){
         Jedis jedis = null;
@@ -25,7 +27,7 @@ public class AuthorController extends Controller {
             String key = "author-" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/author/" + id);
+                return redirect(baseUrl + "/cache/author/" + id);
             }else{
                 Map<String, String> result = jedis.hgetAll(key);
                 return ok(Json.toJson(result));
@@ -43,7 +45,7 @@ public class AuthorController extends Controller {
         try {
             jedis = jedisPool.getResource();
             if (!jedis.exists("authorindex")){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/author/index");
+                return redirect(baseUrl + "/cache/author/index");
             }else{
                 Set<String> keys = jedis.smembers("authorindex");
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -67,7 +69,7 @@ public class AuthorController extends Controller {
             String key = "authorvideos" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/author/videos/" + id);
+                return redirect(baseUrl + "/cache/author/videos/" + id);
             }else{
                 Set<String> keys = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -91,7 +93,7 @@ public class AuthorController extends Controller {
             String key = "authorsearch" + content;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/author/search?search=" + URLEncoder.encode(content, "utf-8"));
+                return redirect(baseUrl + "/cache/author/search?search=" + URLEncoder.encode(content, "utf-8"));
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();

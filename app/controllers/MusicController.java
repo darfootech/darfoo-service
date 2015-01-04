@@ -1,6 +1,7 @@
 package controllers;
 
 import cache.RedisManager;
+import persistence.BackendManager;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,6 +19,7 @@ import java.util.Set;
  */
 public class MusicController extends Controller {
     static JedisPool jedisPool = RedisManager.getRedisPoolInstance();
+    static String baseUrl = BackendManager.getBackendBaseUrl();
 
     public static Result singleMusic(Long id){
         Jedis jedis = null;
@@ -25,7 +27,7 @@ public class MusicController extends Controller {
             String key = "music-" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/resources/music/" + id);
+                return redirect(baseUrl + "/resources/music/" + id);
             }else{
                 Map<String, String> result = jedis.hgetAll(key);
                 return ok(Json.toJson(result));
@@ -44,7 +46,7 @@ public class MusicController extends Controller {
             String key = "musichottest";
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/music/hottest");
+                return redirect(baseUrl + "/cache/music/hottest");
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -70,7 +72,7 @@ public class MusicController extends Controller {
             String key = "musiccategory" + category;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/music/category/" + category);
+                return redirect(baseUrl + "/cache/music/category/" + category);
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -96,7 +98,7 @@ public class MusicController extends Controller {
             String key = "musicsearch" + content;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/music/search?search=" + URLEncoder.encode(content, "utf-8"));
+                return redirect(baseUrl + "/cache/music/search?search=" + URLEncoder.encode(content, "utf-8"));
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();

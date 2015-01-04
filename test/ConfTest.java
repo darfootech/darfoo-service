@@ -11,4 +11,10 @@ public class ConfTest {
         Config redisConfig = ConfigFactory.load("redis");
         System.out.println("redis.host -> " + redisConfig.getString("redis.host"));
     }
+
+    @Test
+    public void loadBaseUrlConf(){
+        Config backendConfig = ConfigFactory.load("backend");
+        System.out.println("backend.baseurl -> " + backendConfig.getString("backend.baseurl"));
+    }
 }

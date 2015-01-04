@@ -1,6 +1,7 @@
 package controllers;
 
 import cache.RedisManager;
+import persistence.BackendManager;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,6 +19,7 @@ import java.util.Set;
  */
 public class TutorialController extends Controller {
     static JedisPool jedisPool = RedisManager.getRedisPoolInstance();
+    static String baseUrl = BackendManager.getBackendBaseUrl();
 
     public static Result singleTutorial(Long id){
         Jedis jedis = null;
@@ -25,7 +27,7 @@ public class TutorialController extends Controller {
             String key = "tutorial-" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/resources/video/tutorial/" + id);
+                return redirect(baseUrl + "/resources/video/tutorial/" + id);
             }else{
                 Map<String, String> result = jedis.hgetAll(key);
                 return ok(Json.toJson(result));
@@ -44,7 +46,7 @@ public class TutorialController extends Controller {
             String key = "tutorialcategory" + category;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/tutorial/category/" + category);
+                return redirect(baseUrl + "/cache/tutorial/category/" + category);
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -70,7 +72,7 @@ public class TutorialController extends Controller {
             String key = "tutorialsearch" + content;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect("http://localhost:8080/darfoobackend/rest/cache/tutorial/search?search=" + URLEncoder.encode(content, "utf-8"));
+                return redirect(baseUrl + "/cache/tutorial/search?search=" + URLEncoder.encode(content, "utf-8"));
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
