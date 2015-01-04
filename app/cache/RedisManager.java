@@ -1,5 +1,7 @@
 package cache;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import play.Play;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -9,33 +11,34 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class RedisManager {
     public static JedisPool jedisPool; // 池化管理jedis链接池
+    public static Config redisConfig;
 
-    /*static {
-        Play.application().classloader().getResource("redis.properties");
-        int maxActive = Play.application().configuration().getInt("redis.maxActive");
-        System.out.println("maxactive -> " + maxActive);
-        int maxIdle = Play.application().configuration().getInt("redis.maxIdle");
-        int maxWait = Play.application().configuration().getInt("redis.maxWait");
-        String ip = Play.application().configuration().getString("redis.host");
-        int port = Play.application().configuration().getInt("redis.port");
-        String password = Play.application().configuration().getString("redis.pass");
-        int timeout = Play.application().configuration().getInt("redis.timeout");
-    }*/
+    static {
+        redisConfig = ConfigFactory.load("redis");
+    }
 
     public static JedisPool getRedisPoolInstance() {
         if (jedisPool == null) {
-            int maxActive = 600;
+            /*int maxActive = 600;
             int maxIdle = 300;
             int maxWait = 1000;
             String ip = "localhost";
             int port = 6379;
             String password = "cleantha";
-            int timeout = 20000;
+            int timeout = 20000;*/
+            int maxActive = redisConfig.getInt("redis.maxActive");
+            int maxIdle = redisConfig.getInt("redis.maxIdle");
+            int maxWait = redisConfig.getInt("redis.maxWait");
+            int timeout = redisConfig.getInt("redis.timeout");
+            int port = redisConfig.getInt("redis.port");
+            String host = redisConfig.getString("redis.host");
+            String password = redisConfig.getString("redis.pass");
             JedisPoolConfig config = new JedisPoolConfig();
             config.setMaxTotal(maxActive);
             config.setMaxIdle(maxIdle);
             config.setMaxWaitMillis(maxWait);
-            jedisPool = new JedisPool(config, ip, port, timeout, password);
+            //config.setTestOnBorrow(redisConfig.getBoolean("redis.testOnBorrow"));
+            jedisPool = new JedisPool(config, host, port, timeout, password);
         }
         return jedisPool;
     }
