@@ -26,8 +26,10 @@ activator start
 
 ## Architecture
 
-backendserver nginx + spring + mysql
-serviceserver nginx + play + redis
+* backendserver nginx + spring + mysql
+* serviceserver nginx + play + redis
+
+aliyun上在一个地区可以直接用内网ip连接redis
 
 ## todo
 
