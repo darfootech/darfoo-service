@@ -24,6 +24,11 @@ activator start
 
 部署的时候backend和service两个项目中的配置文件一定不要忘了cp出来
 
+## Architecture
+
+backendserver nginx + spring + mysql
+serviceserver nginx + play + redis
+
 ## todo
 
 * use async controller integrate with akka
