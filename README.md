@@ -17,8 +17,12 @@ cd conf/
 cp redis.conf.example redis.conf
 cp backend.conf.example backend.conf
 cd ..
-activator run
+activator start
 ```
+
+## notice!!!
+
+部署的时候backend和service两个项目中的配置文件一定不要忘了cp出来
 
 ## todo
 
