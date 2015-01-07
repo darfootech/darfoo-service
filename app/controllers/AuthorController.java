@@ -7,6 +7,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import utils.HttpUtils;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -27,7 +28,14 @@ public class AuthorController extends Controller {
             String key = "author-" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect(baseUrl + "/cache/author/" + id);
+                //return redirect(baseUrl + "/cache/author/" + id);
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/author/" + id);
+                if (statuscode == 200){
+                    Map<String, String> result = jedis.hgetAll(key);
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
             }else{
                 Map<String, String> result = jedis.hgetAll(key);
                 return ok(Json.toJson(result));
@@ -45,7 +53,19 @@ public class AuthorController extends Controller {
         try {
             jedis = jedisPool.getResource();
             if (!jedis.exists("authorindex")){
-                return redirect(baseUrl + "/cache/author/index");
+                //return redirect(baseUrl + "/cache/author/index");
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/author/index");
+                if (statuscode == 200){
+                    Set<String> keys = jedis.smembers("authorindex");
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String key : keys){
+                        Map<String, String> item = jedis.hgetAll(key);
+                        result.add(item);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
             }else{
                 Set<String> keys = jedis.smembers("authorindex");
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -69,7 +89,19 @@ public class AuthorController extends Controller {
             String key = "authorvideos" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect(baseUrl + "/cache/author/videos/" + id);
+                //return redirect(baseUrl + "/cache/author/videos/" + id);
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/author/videos/" + id);
+                if (statuscode == 200){
+                    Set<String> keys = jedis.smembers(key);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String ikey : keys){
+                        Map<String, String> item = jedis.hgetAll(ikey);
+                        result.add(item);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
             }else{
                 Set<String> keys = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
@@ -93,7 +125,19 @@ public class AuthorController extends Controller {
             String key = "authorsearch" + content;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect(baseUrl + "/cache/author/search?search=" + URLEncoder.encode(content, "utf-8"));
+                //return redirect(baseUrl + "/cache/author/search?search=" + URLEncoder.encode(content, "utf-8"));
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/author/search?search=" + URLEncoder.encode(content, "utf-8"));
+                if (statuscode == 200){
+                    Set<String> latestVideos = jedis.smembers(key);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String vkey : latestVideos){
+                        Map<String, String> video = jedis.hgetAll(vkey);
+                        result.add(video);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
