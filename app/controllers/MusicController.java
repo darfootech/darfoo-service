@@ -7,6 +7,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import utils.HttpUtils;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -27,7 +28,14 @@ public class MusicController extends Controller {
             String key = "music-" + id;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect(baseUrl + "/resources/music/" + id);
+                //return redirect(baseUrl + "/resources/music/" + id);
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/resources/music/" + id);
+                if (statuscode == 200){
+                    Map<String, String> result = jedis.hgetAll(key);
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
             }else{
                 Map<String, String> result = jedis.hgetAll(key);
                 return ok(Json.toJson(result));
@@ -46,14 +54,24 @@ public class MusicController extends Controller {
             String key = "musichottest";
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect(baseUrl + "/cache/music/hottest");
+                //return redirect(baseUrl + "/cache/music/hottest");
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/music/hottest");
+                if (statuscode == 200){
+                    Set<String> latestVideos = jedis.smembers(key);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String vkey : latestVideos){
+                        Map<String, String> video = jedis.hgetAll(vkey);
+                        result.add(video);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
                 for (String vkey : latestVideos){
-                    //System.out.println("vkey -> " + vkey);
                     Map<String, String> video = jedis.hgetAll(vkey);
-                    //System.out.println("title -> " + video.get("title"));
                     result.add(video);
                 }
                 return ok(Json.toJson(result));
@@ -72,14 +90,24 @@ public class MusicController extends Controller {
             String key = "musiccategory" + category;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect(baseUrl + "/cache/music/category/" + category);
+                //return redirect(baseUrl + "/cache/music/category/" + category);
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/music/category/" + category);
+                if (statuscode == 200){
+                    Set<String> latestVideos = jedis.smembers(key);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String vkey : latestVideos){
+                        Map<String, String> video = jedis.hgetAll(vkey);
+                        result.add(video);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
                 for (String vkey : latestVideos){
-                    //System.out.println("vkey -> " + vkey);
                     Map<String, String> video = jedis.hgetAll(vkey);
-                    //System.out.println("title -> " + video.get("title"));
                     result.add(video);
                 }
                 return ok(Json.toJson(result));
@@ -98,7 +126,19 @@ public class MusicController extends Controller {
             String key = "musicsearch" + content;
             jedis = jedisPool.getResource();
             if (!jedis.exists(key)){
-                return redirect(baseUrl + "/cache/music/search?search=" + URLEncoder.encode(content, "utf-8"));
+                //return redirect(baseUrl + "/cache/music/search?search=" + URLEncoder.encode(content, "utf-8"));
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/music/search?search=" + URLEncoder.encode(content, "utf-8"));
+                if (statuscode == 200){
+                    Set<String> latestVideos = jedis.smembers(key);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String vkey : latestVideos){
+                        Map<String, String> video = jedis.hgetAll(vkey);
+                        result.add(video);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
