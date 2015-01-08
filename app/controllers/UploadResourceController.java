@@ -1,5 +1,7 @@
 package controllers;
 
+import play.data.DynamicForm;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -21,5 +23,13 @@ public class UploadResourceController extends Controller {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("tk", encryptToken);
         return ok(Json.toJson(result));
+    }
+
+    public static Result uploadFinishCallback(){
+        DynamicForm form = Form.form().bindFromRequest();
+        System.out.println("title -> " + form.get("title"));
+        System.out.println("authorid -> " + form.get("authorid"));
+
+        return ok("ok");
     }
 }

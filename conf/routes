@@ -3,56 +3,57 @@
 # ~~~~
 
 # for fun
-GET        /                                              controllers.Application.index()
-GET        /cache                                         controllers.Application.cache()
-GET        /yacache                                       controllers.Application.yacache()
-GET        /cacheindex/:id                                controllers.Application.cacheindex(id: Long)
-GET        /yacachefast                                   controllers.Application.yacachefastjson()
-GET        /cacheindexfast/:id                            controllers.Application.cacheindexfastjson(id: Long)
+GET         /                                              controllers.Application.index()
+GET         /cache                                         controllers.Application.cache()
+GET         /yacache                                       controllers.Application.yacache()
+GET         /cacheindex/:id                                controllers.Application.cacheindex(id: Long)
+GET         /yacachefast                                   controllers.Application.yacachefastjson()
+GET         /cacheindexfast/:id                            controllers.Application.cacheindexfastjson(id: Long)
 # GET        /cachemodel/:id                               controllers.Application.cachemodel(id: Integer)
 # GET        /cachemodelfast/:id                           controllers.Application.cachemodelfastjson(id: Integer)
-GET        /cacheindexall/:id                             controllers.Application.cacheindexall(id: Long)
-GET        /yacacheindexall                               controllers.Application.yacacheindexall()
-GET        /testredirect                                  controllers.Application.testredirect()
+GET         /cacheindexall/:id                             controllers.Application.cacheindexall(id: Long)
+GET         /yacacheindexall                               controllers.Application.yacacheindexall()
+GET         /testredirect                                  controllers.Application.testredirect()
 
 # for high performence service
-GET        /resources/video/index                         controllers.VideoController.indexVideos()
-GET        /resources/video/recommend                     controllers.VideoController.recommendVideos()
-GET        /resources/video/:id                           controllers.VideoController.singleVideo(id: Long)
-GET        /resources/video/category/:category            controllers.VideoController.category(category: String)
-GET        /resources/video/music/:id                     controllers.VideoController.getMusic(id: Long)
-GET        /resources/video/search/:content               controllers.VideoController.search(content: String)
+GET         /resources/video/index                         controllers.VideoController.indexVideos()
+GET         /resources/video/recommend                     controllers.VideoController.recommendVideos()
+GET         /resources/video/:id                           controllers.VideoController.singleVideo(id: Long)
+GET         /resources/video/category/:category            controllers.VideoController.category(category: String)
+GET         /resources/video/music/:id                     controllers.VideoController.getMusic(id: Long)
+GET         /resources/video/search/:content               controllers.VideoController.search(content: String)
 
-GET        /resources/tutorial/:id                        controllers.TutorialController.singleTutorial(id: Long)
-GET        /resources/tutorial/category/:category         controllers.TutorialController.category(category: String)
-GET        /resources/tutorial/search/:content            controllers.TutorialController.search(content: String)
+GET         /resources/tutorial/:id                        controllers.TutorialController.singleTutorial(id: Long)
+GET         /resources/tutorial/category/:category         controllers.TutorialController.category(category: String)
+GET         /resources/tutorial/search/:content            controllers.TutorialController.search(content: String)
 
-GET        /resources/music/hottest                       controllers.MusicController.hottestMusic()
-GET        /resources/music/category/:category            controllers.MusicController.category(category: String)
-GET        /resources/music/:id                           controllers.MusicController.singleMusic(id: Long)
-GET        /resources/music/search/:content               controllers.MusicController.search(content: String)
+GET         /resources/music/hottest                       controllers.MusicController.hottestMusic()
+GET         /resources/music/category/:category            controllers.MusicController.category(category: String)
+GET         /resources/music/:id                           controllers.MusicController.singleMusic(id: Long)
+GET         /resources/music/search/:content               controllers.MusicController.search(content: String)
 
-GET        /resources/author/index                        controllers.AuthorController.indexAuthors()
-GET        /resources/author/:id                          controllers.AuthorController.singleAuthor(id: Long)
-GET        /resources/author/videos/:id                   controllers.AuthorController.getVideos(id: Long)
-GET        /resources/author/search/:content              controllers.AuthorController.search(content: String)
+GET         /resources/author/index                        controllers.AuthorController.indexAuthors()
+GET         /resources/author/:id                          controllers.AuthorController.singleAuthor(id: Long)
+GET         /resources/author/videos/:id                   controllers.AuthorController.getVideos(id: Long)
+GET         /resources/author/search/:content              controllers.AuthorController.search(content: String)
 
-GET        /resources/version/latest                      controllers.VersionController.getLatestVersion()
+GET         /resources/version/latest                      controllers.VersionController.getLatestVersion()
 
 # for operation statistics
 
 # for resources
-GET        /statistics/video/:id/m/:mac/h/:host           controllers.StatisticController.singleVideo(id: Integer, mac: String, host: String)
-GET        /statistics/tutorial/:id/m/:mac/h/:host        controllers.StatisticController.singleTutorial(id: Integer, mac: String, host: String)
-GET        /statistics/music/:id/m/:mac/h/:host           controllers.StatisticController.singleMusic(id: Integer, mac: String, host: String)
-GET        /statistics/author/:id/m/:mac/h/:host          controllers.StatisticController.singleAuthor(id: Integer, mac: String, host: String)
+GET         /statistics/video/:id/m/:mac/h/:host           controllers.StatisticController.singleVideo(id: Integer, mac: String, host: String)
+GET         /statistics/tutorial/:id/m/:mac/h/:host        controllers.StatisticController.singleTutorial(id: Integer, mac: String, host: String)
+GET         /statistics/music/:id/m/:mac/h/:host           controllers.StatisticController.singleMusic(id: Integer, mac: String, host: String)
+GET         /statistics/author/:id/m/:mac/h/:host          controllers.StatisticController.singleAuthor(id: Integer, mac: String, host: String)
 
 # for menu
-GET        /statistics/menu/:id/m/:mac/h/:host            controllers.StatisticController.menu(id: Integer, mac: String, host: String)
-GET        /statistics/tab/:id/m/:mac/h/:host             controllers.StatisticController.tab(id: Integer, mac: String, host: String)
+GET         /statistics/menu/:id/m/:mac/h/:host            controllers.StatisticController.menu(id: Integer, mac: String, host: String)
+GET         /statistics/tab/:id/m/:mac/h/:host             controllers.StatisticController.tab(id: Integer, mac: String, host: String)
 
 # for upload resource
-GET        /uploadresource/gettk                          controllers.UploadResourceController.getUploadToken()
+GET         /uploadresource/gettk                          controllers.UploadResourceController.getUploadToken()
+POST        /uploadresource/finishcallback                controllers.UploadResourceController.uploadFinishCallback()
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file                                  controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                  controllers.Assets.at(path="/public", file)
