@@ -40,10 +40,15 @@ GET        /resources/author/search/:content              controllers.AuthorCont
 GET        /resources/version/latest                      controllers.VersionController.getLatestVersion()
 
 # for operation statistics
+
+# for resources
 GET        /statistics/video/:id/m/:mac/h/:host           controllers.StatisticController.singleVideo(id: Integer, mac: String, host: String)
 GET        /statistics/tutorial/:id/m/:mac/h/:host        controllers.StatisticController.singleTutorial(id: Integer, mac: String, host: String)
 GET        /statistics/music/:id/m/:mac/h/:host           controllers.StatisticController.singleMusic(id: Integer, mac: String, host: String)
 GET        /statistics/author/:id/m/:mac/h/:host          controllers.StatisticController.singleAuthor(id: Integer, mac: String, host: String)
+
+# for menu
+GET        /statistics/menu/:id/m/:mac/h/:host            controllers.StatisticController.menu(id: Integer, mac: String, host: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file                                  controllers.Assets.at(path="/public", file)

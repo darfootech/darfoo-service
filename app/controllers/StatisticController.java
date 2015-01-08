@@ -9,6 +9,7 @@ import utils.StatisticUtils;
  */
 public class StatisticController extends Controller {
 
+    /*for resource statistics*/
     public static Result singleVideo(Integer id, String mac, String host){
         StatisticUtils.insertOrUpdateResource(mac, host, "video", id);
         return ok();
@@ -28,6 +29,16 @@ public class StatisticController extends Controller {
         StatisticUtils.insertOrUpdateResource(mac, host, "author", id);
         return ok();
     }
+    /*end of resource statistics*/
 
+    /*for menu statistics*/
+    public static Result menu(Integer id, String mac, String host){
+        StatisticUtils.insertOrUpdateMenu(mac, host, id);
+        return ok();
+    }
+    /*end of menu statistics*/
+
+    /*for tab statistics*/
+    /*end of tab statistics*/
 }
 
