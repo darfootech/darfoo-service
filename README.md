@@ -12,12 +12,22 @@
 
 ## how to deploy
 
+* realize configuration files
+
 ```
 cd conf/
 cp redis.conf.example redis.conf
 cp backend.conf.example backend.conf
 cd ..
-activator start
+activator start # for production deployment
+```
+
+* realize the mysql configuration in $PATH
+
+```
+export DATABASE_URL_DB=mysql://host:port/database
+export DATABASE_USERNAME_DB=username
+export DATABASE_PASSWORD_DB=password
 ```
 
 ## notice!!!
