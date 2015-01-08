@@ -14,22 +14,22 @@ import javax.persistence.Id;
 @Entity
 public class Menu extends Model {
     @Id
-    public Long id;
+    private Long id;
 
     @Constraints.Required
-    public String mac;
+    private String mac;
 
     @Constraints.Required
-    public String hostip;
+    private String hostip;
 
     /**
      * 数字增长从左到有从上到下递增
      */
     @Constraints.Required
-    public int menuid;
+    private int menuid;
 
     @Constraints.Required
-    public Long clickcount;
+    private Long clickcount;
 
     public Menu(String mac, String hostip, int menuid, Long clickcount) {
         this.mac = mac;
@@ -41,4 +41,49 @@ public class Menu extends Model {
     public static Finder<Long, Menu> find = new Finder<Long, Menu>(
             Long.class, Menu.class
     );
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getHostip() {
+        return hostip;
+    }
+
+    public void setHostip(String hostip) {
+        this.hostip = hostip;
+    }
+
+    public int getMenuid() {
+        return menuid;
+    }
+
+    public void setMenuid(int menuid) {
+        this.menuid = menuid;
+    }
+
+    public Long getClickcount() {
+        return clickcount;
+    }
+
+    public void setClickcount(Long clickcount) {
+        this.clickcount = clickcount;
+    }
+
+    public void updateClickcount(){
+        this.clickcount += 1;
+        this.update();
+    }
 }

@@ -41,5 +41,9 @@ public class ApplicationTest {
         assertThat(contentAsString(html)).contains("Your new application is ready.");
     }
 
+    @Test
+    public void testreplace(){
+        System.out.println("cleantha".replace("%", "-"));
+    }
 
 }

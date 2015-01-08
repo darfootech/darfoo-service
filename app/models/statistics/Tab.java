@@ -13,27 +13,72 @@ import javax.persistence.Id;
 @Entity
 public class Tab extends Model {
     @Id
-    public Long id;
+    private Long id;
 
     @Constraints.Required
-    public String mac;
+    private String mac;
 
     @Constraints.Required
-    public String hostip;
+    private String hostip;
 
     /**
      * 数字增长从左到右
      */
     @Constraints.Required
-    public int tabid;
+    private int tabid;
 
     @Constraints.Required
-    public Long clickcount;
+    private Long clickcount;
 
     public Tab(String mac, String hostip, int tabid, Long clickcount) {
         this.mac = mac;
         this.hostip = hostip;
         this.tabid = tabid;
         this.clickcount = clickcount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getHostip() {
+        return hostip;
+    }
+
+    public void setHostip(String hostip) {
+        this.hostip = hostip;
+    }
+
+    public int getTabid() {
+        return tabid;
+    }
+
+    public void setTabid(int tabid) {
+        this.tabid = tabid;
+    }
+
+    public Long getClickcount() {
+        return clickcount;
+    }
+
+    public void setClickcount(Long clickcount) {
+        this.clickcount = clickcount;
+    }
+
+    public void updateClickcount(){
+        this.clickcount += 1;
+        this.update();
     }
 }

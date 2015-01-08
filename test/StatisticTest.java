@@ -34,8 +34,7 @@ public class StatisticTest {
                 Menu menu = Ebean.find(Menu.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("menuid", menuid).findUnique();
 
                 if (menu != null){
-                    menu.clickcount += 1;
-                    menu.update();
+                    menu.updateClickcount();
                 }else{
                     Menu newMenu = new Menu(macaddress, hostip, menuid, 0L);
                     newMenu.save();
@@ -78,13 +77,12 @@ public class StatisticTest {
             @Override
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
-                String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String hostip = "fe80::2ad:5ff:fe01:a685-wlan0";
                 int tabid = 3;
                 Tab tab = Ebean.find(Tab.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("tabid", tabid).findUnique();
 
                 if (tab != null){
-                    tab.clickcount += 1;
-                    tab.update();
+                    tab.updateClickcount();
                 }else{
                     Tab newTab = new Tab(macaddress, hostip, tabid, 0L);
                     newTab.save();
@@ -134,8 +132,7 @@ public class StatisticTest {
                 Resource resource = Ebean.find(Resource.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("type", resourcetype).eq("resourceid", resourceid).findUnique();
 
                 if (resource != null){
-                    resource.clickcount += 1;
-                    resource.update();
+                    resource.updateClickcount();
                 }else{
                     Resource newResource = new Resource(macaddress, hostip, resourcetype, resourceid, 0L);
                     newResource.save();
