@@ -1,3 +1,4 @@
+import com.avaje.ebean.Ebean;
 import models.statistics.*;
 import org.junit.Test;
 
@@ -18,6 +19,27 @@ public class StatisticTest {
                 int menuid = 3;
                 Menu menu = new Menu(macaddress, hostip, menuid, 0L);
                 menu.save();
+            }
+        });
+    }
+
+    @Test
+    public void insertOrUpdateMenu(){
+        running(fakeApplication(), new Runnable() {
+            @Override
+            public void run() {
+                String macaddress = "00:ad:05:01:a6:85";
+                String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                int menuid = 3;
+                Menu menu = Ebean.find(Menu.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("menuid", menuid).findUnique();
+
+                if (menu != null){
+                    menu.clickcount += 1;
+                    menu.update();
+                }else{
+                    Menu newMenu = new Menu(macaddress, hostip, menuid, 0L);
+                    newMenu.save();
+                }
             }
         });
     }

@@ -37,4 +37,8 @@ public class Menu extends Model {
         this.menuid = menuid;
         this.clickcount = clickcount;
     }
+
+    public static Finder<Long, Menu> find = new Finder<Long, Menu>(
+            Long.class, Menu.class
+    );
 }
