@@ -51,5 +51,8 @@ GET        /statistics/author/:id/m/:mac/h/:host          controllers.StatisticC
 GET        /statistics/menu/:id/m/:mac/h/:host            controllers.StatisticController.menu(id: Integer, mac: String, host: String)
 GET        /statistics/tab/:id/m/:mac/h/:host             controllers.StatisticController.tab(id: Integer, mac: String, host: String)
 
+# for upload resource
+GET        /uploadresource/gettk                          controllers.UploadResourceController.getUploadToken()
+
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file                                  controllers.Assets.at(path="/public", file)

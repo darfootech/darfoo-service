@@ -14,5 +14,7 @@ libraryDependencies ++= Seq(
   "redis.clients" % "jedis" % "2.6.1",
   "mysql" % "mysql-connector-java" % "5.1.18",
   "com.alibaba" % "fastjson" % "1.2.3",
-  "org.apache.httpcomponents" % "httpclient" % "4.3.6"
+  "org.apache.httpcomponents" % "httpclient" % "4.3.6",
+  "commons-codec" % "commons-codec" % "1.10",
+  "com.qiniu" % "sdk" % "6.1.7"
 )
