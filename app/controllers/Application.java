@@ -1,7 +1,6 @@
 package controllers;
 
 import cache.RedisManager;
-import models.SingleVideo;
 import play.libs.Json;
 import play.mvc.*;
 
@@ -243,7 +242,7 @@ public class Application extends Controller {
         }
     }
 
-    public static Result cachemodel(Integer id){
+    /*public static Result cachemodel(Integer id){
         Jedis jedis = null;
         try {
             //int vid = 1;
@@ -288,5 +287,5 @@ public class Application extends Controller {
         }finally {
             jedisPool.returnResource(jedis);
         }
-    }
+    }*/
 }

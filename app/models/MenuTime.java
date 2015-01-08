@@ -25,6 +25,9 @@ public class MenuTime extends Model {
     @Constraints.Required
     public String hostip;
 
+    /**
+     * 数字增长从左到有从上到下递增
+     */
     @Constraints.Required
     public int menuid;
 
