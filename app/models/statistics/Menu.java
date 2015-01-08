@@ -1,4 +1,4 @@
-package models; /**
+package models.statistics; /**
  * Created by zjh on 15-1-7.
  */
 

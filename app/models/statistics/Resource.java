@@ -1,4 +1,4 @@
-package models;
+package models.statistics;
 
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -11,7 +11,7 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class Tab extends Model {
+public class Resource extends Model {
     @Id
     public Long id;
 
@@ -22,18 +22,22 @@ public class Tab extends Model {
     public String hostip;
 
     /**
-     * 数字增长从左到右
+     * video tutorial music author
      */
     @Constraints.Required
-    public int tabid;
+    public String type;
+
+    @Constraints.Required
+    public Integer resourceid;
 
     @Constraints.Required
     public Long clickcount;
 
-    public Tab(String mac, String hostip, int tabid, Long clickcount) {
+    public Resource(String mac, String hostip, String type, Integer resourceid, Long clickcount) {
         this.mac = mac;
         this.hostip = hostip;
-        this.tabid = tabid;
+        this.type = type;
+        this.resourceid = resourceid;
         this.clickcount = clickcount;
     }
 }

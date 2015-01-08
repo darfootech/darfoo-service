@@ -1,4 +1,4 @@
-package models;
+package models.statistics;
 
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -13,7 +13,7 @@ import java.util.Date;
  */
 
 @Entity
-public class ResourceTime extends Model {
+public class TabTime extends Model {
     @Id
     public Long id;
 
@@ -24,13 +24,10 @@ public class ResourceTime extends Model {
     public String hostip;
 
     /**
-     * video tutorial music author
+     * 数字增长从左到右
      */
     @Constraints.Required
-    public String type;
-
-    @Constraints.Required
-    public Integer resourceid;
+    public int tabid;
 
     @Constraints.Required
     public Long timestamp = System.currentTimeMillis() / 1000;
@@ -38,10 +35,9 @@ public class ResourceTime extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date dueDate = new Date();
 
-    public ResourceTime(String mac, String hostip, String type, Integer resourceid) {
+    public TabTime(String mac, String hostip, int tabid) {
         this.mac = mac;
         this.hostip = hostip;
-        this.type = type;
-        this.resourceid = resourceid;
+        this.tabid = tabid;
     }
 }

@@ -1,4 +1,6 @@
-package models;
+package models.statistics; /**
+ * Created by zjh on 15-1-7.
+ */
 
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -9,11 +11,11 @@ import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * Created by zjh on 15-1-8.
+ * 用来统计一开始进去的大菜单每一个按钮的使用情况统计每一次点击的时间
  */
 
 @Entity
-public class TabTime extends Model {
+public class MenuTime extends Model {
     @Id
     public Long id;
 
@@ -24,10 +26,10 @@ public class TabTime extends Model {
     public String hostip;
 
     /**
-     * 数字增长从左到右
+     * 数字增长从左到有从上到下递增
      */
     @Constraints.Required
-    public int tabid;
+    public int menuid;
 
     @Constraints.Required
     public Long timestamp = System.currentTimeMillis() / 1000;
@@ -35,9 +37,9 @@ public class TabTime extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date dueDate = new Date();
 
-    public TabTime(String mac, String hostip, int tabid) {
+    public MenuTime(String mac, String hostip, int menuid) {
         this.mac = mac;
         this.hostip = hostip;
-        this.tabid = tabid;
+        this.menuid = menuid;
     }
 }

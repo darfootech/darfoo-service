@@ -1,5 +1,4 @@
-import com.avaje.ebean.Ebean;
-import models.*;
+import models.statistics.*;
 import org.junit.Test;
 
 import static play.test.Helpers.fakeApplication;
