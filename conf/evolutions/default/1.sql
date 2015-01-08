@@ -22,6 +22,27 @@ create table menu_time (
   constraint pk_menu_time primary key (id))
 ;
 
+create table resource (
+  id                        bigint auto_increment not null,
+  mac                       varchar(255),
+  hostip                    varchar(255),
+  type                      varchar(255),
+  resourceid                integer,
+  clickcount                bigint,
+  constraint pk_resource primary key (id))
+;
+
+create table resource_time (
+  id                        bigint auto_increment not null,
+  mac                       varchar(255),
+  hostip                    varchar(255),
+  type                      varchar(255),
+  resourceid                integer,
+  timestamp                 bigint,
+  due_date                  datetime,
+  constraint pk_resource_time primary key (id))
+;
+
 create table tab (
   id                        bigint auto_increment not null,
   mac                       varchar(255),
@@ -51,6 +72,10 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table menu;
 
 drop table menu_time;
+
+drop table resource;
+
+drop table resource_time;
 
 drop table tab;
 

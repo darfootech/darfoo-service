@@ -1,8 +1,5 @@
 import com.avaje.ebean.Ebean;
-import models.Menu;
-import models.MenuTime;
-import models.Tab;
-import models.TabTime;
+import models.*;
 import org.junit.Test;
 
 import static play.test.Helpers.fakeApplication;
@@ -64,6 +61,36 @@ public class StatisticTest {
                 int tabid = 3;
                 TabTime tabTime = new TabTime(macaddress, hostip, tabid);
                 tabTime.save();
+            }
+        });
+    }
+
+    @Test
+    public void insertResource(){
+        running(fakeApplication(), new Runnable() {
+            @Override
+            public void run() {
+                String macaddress = "00:ad:05:01:a6:85";
+                String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String resourcetype = "video";
+                int resourceid = 333;
+                Resource resource = new Resource(macaddress, hostip, resourcetype, resourceid, 0L);
+                resource.save();
+            }
+        });
+    }
+
+    @Test
+    public void insertResourceTime(){
+        running(fakeApplication(), new Runnable() {
+            @Override
+            public void run() {
+                String macaddress = "00:ad:05:01:a6:85";
+                String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String resourcetype = "video";
+                int resourceid = 333;
+                ResourceTime resourceTime = new ResourceTime(macaddress, hostip, resourcetype, resourceid);
+                resourceTime.save();
             }
         });
     }
