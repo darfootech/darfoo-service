@@ -39,6 +39,10 @@ public class StatisticController extends Controller {
     /*end of menu statistics*/
 
     /*for tab statistics*/
+    public static Result tab(Integer id, String mac, String host){
+        StatisticUtils.insertOrUpdateTab(mac, host, id);
+        return ok();
+    }
     /*end of tab statistics*/
 }
 
