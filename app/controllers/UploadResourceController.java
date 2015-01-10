@@ -25,8 +25,9 @@ public class UploadResourceController extends Controller {
         String username = form.get("username");
         String password = form.get("password");
 
-        User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
-        if (user != null){
+        //User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
+        boolean flag = User.authenticate(username, password);
+        if (flag){
             System.out.println("用户已经存在");
             String token = QiniuUtils.getToken();
             System.out.println("origin token -> " + token);
@@ -52,8 +53,9 @@ public class UploadResourceController extends Controller {
         System.out.println("password -> " + password);
         System.out.println("videokey -> " + videokey);
 
-        User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
-        if (user != null){
+        //User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
+        boolean flag = User.authenticate(username, password);
+        if (flag){
             System.out.println("用户已经存在");
             result.put("status", "ok");
             return ok(Json.toJson(result));
