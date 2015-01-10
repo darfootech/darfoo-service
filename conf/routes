@@ -61,6 +61,7 @@ POST        /auth/newbind                                  controllers.AuthContr
 POST        /auth/login                                    controllers.AuthController.login()
 
 # for share
+GET         /share/:type/:idhash                           controllers.ShareController.shareResource(type: String, idhash: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                  controllers.Assets.at(path="/public", file)

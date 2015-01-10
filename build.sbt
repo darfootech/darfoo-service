@@ -16,5 +16,6 @@ libraryDependencies ++= Seq(
   "com.alibaba" % "fastjson" % "1.2.3",
   "org.apache.httpcomponents" % "httpclient" % "4.3.6",
   "commons-codec" % "commons-codec" % "1.10",
-  "com.qiniu" % "sdk" % "6.1.7"
+  "com.qiniu" % "sdk" % "6.1.7",
+  "org.mindrot" % "jbcrypt" % "0.3m"
 )

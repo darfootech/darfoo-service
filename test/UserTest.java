@@ -47,4 +47,44 @@ public class UserTest {
             }
         });
     }
+
+    @Test
+    public void bcryptInsertUser(){
+        running(fakeApplication(), new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String username = "cleantha112233";
+                    String password = CryptUtils.base64EncodeStr("pppppppp");
+
+                    boolean flag = User.create(username, password);
+                    if (flag){
+                        System.out.println("insert successful");
+                    }else{
+                        System.out.println("insert failed");
+                    }
+                }catch (PersistenceException e){
+                    System.out.println("duplicate username");
+                }
+            }
+        });
+    }
+
+    @Test
+    public void bcryptUserAuth(){
+        running(fakeApplication(), new Runnable() {
+            @Override
+            public void run() {
+                String username = "cleantha333";
+                String password = CryptUtils.base64EncodeStr("pppppppp");
+
+                boolean flag = User.authenticate(username, password);
+                if (flag){
+                    System.out.println("用户已经存在");
+                }else{
+                    System.out.println("用户不存在");
+                }
+            }
+        });
+    }
 }

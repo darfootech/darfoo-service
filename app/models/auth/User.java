@@ -1,5 +1,6 @@
 package models.auth;
 
+import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -23,9 +24,35 @@ public class User extends Model {
     @Constraints.Required
     private String password;
 
+    public static Finder<Long, User> find = new Finder(Long.class, User.class);
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public static Boolean create(String username, String password) {
+        User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()));
+        user.save();
+        if (user.getId() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static Boolean authenticate(String username, String password) {
+        User user = User.find.where().eq("username", username).findUnique();
+        try {
+            if (user != null && BCrypt.checkpw(password, user.password)) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch (IllegalArgumentException e){
+            return false;
+        }
+
     }
 
     public Long getId() {
