@@ -3,6 +3,8 @@ import models.auth.User;
 import org.junit.Test;
 import utils.CryptUtils;
 
+import javax.persistence.PersistenceException;
+
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.running;
 
@@ -15,10 +17,15 @@ public class UserTest {
         running(fakeApplication(), new Runnable() {
             @Override
             public void run() {
-                String username = "cleantha";
-                String password = CryptUtils.base64EncodeStr("pppppppp");
-                User user = new User(username, password);
-                user.save();
+                try {
+                    String username = "cleantha";
+                    String password = CryptUtils.base64EncodeStr("pppppppp");
+                    User user = new User(username, password);
+                    user.save();
+                    System.out.println("insert id -> " + user.getId());
+                }catch (PersistenceException e){
+                    System.out.println("duplicate username insert failed");
+                }
             }
         });
     }
@@ -30,8 +37,8 @@ public class UserTest {
             public void run() {
                 String username = "cleantha333";
                 String password = CryptUtils.base64EncodeStr("pppppppp");
-                User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
-
+                User user = Ebean.find
+                (User.class).where().eq("username", username).eq("password", password).findUnique();
                 if (user != null){
                     System.out.println("用户已经存在");
                 }else{

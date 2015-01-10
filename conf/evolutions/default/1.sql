@@ -3,6 +3,14 @@
 
 # --- !Ups
 
+create table bind (
+  id                        bigint auto_increment not null,
+  user_id                   bigint,
+  mac                       varchar(255) not null,
+  constraint uq_bind_mac unique (mac),
+  constraint pk_bind primary key (id))
+;
+
 create table menu (
   id                        bigint auto_increment not null,
   mac                       varchar(255),
@@ -64,8 +72,9 @@ create table tab_time (
 
 create table user (
   id                        bigint auto_increment not null,
-  username                  varchar(255),
+  username                  varchar(255) not null,
   password                  varchar(255),
+  constraint uq_user_username unique (username),
   constraint pk_user primary key (id))
 ;
 
@@ -75,6 +84,8 @@ create table user (
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table bind;
 
 drop table menu;
 
