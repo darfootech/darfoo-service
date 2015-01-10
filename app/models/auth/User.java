@@ -31,14 +31,10 @@ public class User extends Model {
         this.password = password;
     }
 
-    public static Boolean create(String username, String password) {
+    public static User create(String username, String password) {
         User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()));
         user.save();
-        if (user.getId() > 0){
-            return true;
-        }else{
-            return false;
-        }
+        return user;
     }
 
     public static Boolean authenticate(String username, String password) {

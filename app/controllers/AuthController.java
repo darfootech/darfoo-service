@@ -39,6 +39,10 @@ public class AuthController extends Controller {
         }
     }
 
+    /**
+     * password已经用base64加密了
+     * @return
+     */
     public static Result bindMac(){
         DynamicForm form = Form.form().bindFromRequest();
         String mac = form.get("mac");
@@ -46,17 +50,17 @@ public class AuthController extends Controller {
         String password = form.get("password");
 
         Map<String, Object> result = new HashMap<String, Object>();
-        User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
-        if (user != null){
+        //User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
+        boolean flag = User.authenticate(username, password);
+        if (flag){
             System.out.println("用户已经存在");
             result.put("status", "500");
             return ok(Json.toJson(result));
         }else{
             System.out.println("用户不存在");
             try {
-                User newUser = new User(username, password);
-                newUser.save();
-                long userid = newUser.getId();
+                User user = User.create(username, password);
+                long userid = user.getId();
                 Bind bind = new Bind(userid, mac);
                 bind.save();
                 long bindid = bind.getId();
@@ -82,8 +86,9 @@ public class AuthController extends Controller {
         String username = form.get("username");
         String password = form.get("password");
 
-        User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
-        if (user != null){
+        //User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
+        boolean flag = User.authenticate(username, password);
+        if (flag){
             System.out.println("用户已经存在");
             result.put("status", 200);
             return ok(Json.toJson(result));

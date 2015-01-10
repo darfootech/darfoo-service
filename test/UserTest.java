@@ -57,8 +57,8 @@ public class UserTest {
                     String username = "cleantha112233";
                     String password = CryptUtils.base64EncodeStr("pppppppp");
 
-                    boolean flag = User.create(username, password);
-                    if (flag){
+                    User user = User.create(username, password);
+                    if (user.getId() > 0){
                         System.out.println("insert successful");
                     }else{
                         System.out.println("insert failed");
