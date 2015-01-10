@@ -75,4 +75,23 @@ public class AuthController extends Controller {
             }
         }
     }
+
+    public static Result login(){
+        Map<String, Object> result = new HashMap<String, Object>();
+        DynamicForm form = Form.form().bindFromRequest();
+        String username = form.get("username");
+        String password = form.get("password");
+
+        User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
+        if (user != null){
+            System.out.println("用户已经存在");
+            result.put("status", 200);
+            return ok(Json.toJson(result));
+        }else{
+            System.out.println("用户不存在");
+            result.put("status", 500);
+            return ok(Json.toJson(result));
+        }
+    }
+
 }
