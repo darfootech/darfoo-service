@@ -62,6 +62,13 @@ create table tab_time (
   constraint pk_tab_time primary key (id))
 ;
 
+create table user (
+  id                        bigint auto_increment not null,
+  username                  varchar(255),
+  password                  varchar(255),
+  constraint pk_user primary key (id))
+;
+
 
 
 
@@ -80,6 +87,8 @@ drop table resource_time;
 drop table tab;
 
 drop table tab_time;
+
+drop table user;
 
 SET FOREIGN_KEY_CHECKS=1;
 
