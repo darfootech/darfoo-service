@@ -56,7 +56,7 @@ public class AuthorController extends Controller {
                 //return redirect(baseUrl + "/cache/author/index");
                 int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/author/index");
                 if (statuscode == 200){
-                    Set<String> keys = jedis.smembers("authorindex");
+                    List<String> keys = jedis.lrange("authorindex", 0L, -1L);
                     List<Map<String, String>> result = new ArrayList<Map<String, String>>();
                     for (String key : keys){
                         Map<String, String> item = jedis.hgetAll(key);
@@ -67,7 +67,7 @@ public class AuthorController extends Controller {
                     return ok(Json.toJson("error"));
                 }
             }else{
-                Set<String> keys = jedis.smembers("authorindex");
+                List<String> keys = jedis.lrange("authorindex", 0L, -1L);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
                 for (String key : keys){
                     Map<String, String> item = jedis.hgetAll(key);
