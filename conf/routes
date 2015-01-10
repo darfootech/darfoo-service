@@ -53,7 +53,11 @@ GET         /statistics/tab/:id/m/:mac/h/:host             controllers.Statistic
 
 # for upload resource
 GET         /uploadresource/gettk                          controllers.UploadResourceController.getUploadToken()
-POST        /uploadresource/finishcallback                controllers.UploadResourceController.uploadFinishCallback()
+POST        /uploadresource/finishcallback                 controllers.UploadResourceController.uploadFinishCallback()
+
+# for auth
+GET         /auth/preparebind/:mac                         controllers.AuthController.isMacBind(mac: String)
+POST        /auth/newbind                                  controllers.AuthController.bindMac()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                  controllers.Assets.at(path="/public", file)
