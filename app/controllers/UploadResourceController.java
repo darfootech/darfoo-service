@@ -2,21 +2,28 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import models.auth.User;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import persistence.BackendManager;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.CryptUtils;
+import utils.HttpUtils;
 import utils.QiniuUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by zjh on 15-1-8.
  */
 public class UploadResourceController extends Controller {
+    static String baseUrl = BackendManager.getBackendBaseUrl();
 
     public static Result getUploadToken(){
         Map<String, Object> result = new HashMap<String, Object>();
@@ -53,16 +60,23 @@ public class UploadResourceController extends Controller {
         System.out.println("password -> " + password);
         System.out.println("videokey -> " + videokey);
 
-        //User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();
         boolean flag = User.authenticate(username, password);
         if (flag){
             System.out.println("用户已经存在");
-            result.put("status", "ok");
-            return ok(Json.toJson(result));
+            User user = Ebean.find(User.class).where().eq("username", username).findUnique();
+            String requestUrl = baseUrl + "/uploadresource/finishcallback";
+
+            List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+            urlParameters.add(new BasicNameValuePair("userid", user.getId()+""));
+            urlParameters.add(new BasicNameValuePair("videokey", videokey));
+
+            String response = new HttpUtils().postRequest(requestUrl, urlParameters);
+            return ok(response);
         }else{
             System.out.println("用户不存在");
-            result.put("status", "error");
+            result.put("status", "none");
             return ok(Json.toJson(result));
         }
     }
 }
+
