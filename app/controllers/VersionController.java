@@ -8,6 +8,7 @@ import persistence.BackendManager;
 import play.api.libs.json.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import utils.HttpUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,21 +23,7 @@ public class VersionController extends Controller {
     public static Result getLatestVersion(){
         //return redirect(baseUrl + "/resources/version/latest");
         String requestUrl = baseUrl + "/resources/version/latest";
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(requestUrl);
-        try {
-            HttpResponse response = client.execute(request);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer result = new StringBuffer();
-            String line = "";
-            while ((line = reader.readLine()) != null){
-                result.append(line);
-            }
-            System.out.println(result);
-            return ok(result.toString());
-        } catch (IOException e) {
-            //e.printStackTrace();
-            return badRequest();
-        }
+        String response = new HttpUtils().getRequest(requestUrl);
+        return ok(response);
     }
 }

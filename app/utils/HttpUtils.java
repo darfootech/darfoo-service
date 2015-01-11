@@ -5,7 +5,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Created by zjh on 15-1-7.
@@ -30,4 +32,22 @@ public class HttpUtils {
         }
     }
 
+    public String getRequest(String backendUrl){
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet(backendUrl);
+        try {
+            HttpResponse response = client.execute(request);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer result = new StringBuffer();
+            String line = "";
+            while ((line = reader.readLine()) != null){
+                result.append(line);
+            }
+            System.out.println(result);
+            return result.toString();
+        } catch (IOException e) {
+            //e.printStackTrace();
+            return "";
+        }
+    }
 }
