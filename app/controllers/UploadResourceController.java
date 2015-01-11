@@ -52,10 +52,24 @@ public class UploadResourceController extends Controller {
      * launcher上传视频之前要先确定上传的video标识也就是名字加后缀是否已经存在了
      * @return
      */
-    public static Result prepareUpload(String videokey){
-        String requestUrl = baseUrl + "/uploadresource/prepareupload/" + videokey;
-        String response = new HttpUtils().getRequest(requestUrl);
-        return ok(response);
+    public static Result prepareUpload(){
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        DynamicForm form = Form.form().bindFromRequest();
+        String username = form.get("username");
+        String password = form.get("password");
+        String videokey = form.get("videokey");
+
+        boolean flag = User.authenticate(username, password);
+        if (flag){
+            String requestUrl = baseUrl + "/uploadresource/prepareupload/" + videokey;
+            String response = new HttpUtils().getRequest(requestUrl);
+            return ok(response);
+        }else{
+            System.out.println("用户不存在");
+            result.put("status", "none");
+            return ok(Json.toJson(result));
+        }
     }
 
     public static Result uploadFinishCallback(){

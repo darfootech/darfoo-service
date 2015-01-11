@@ -54,6 +54,7 @@ GET         /statistics/tab/:id/m/:mac/h/:host             controllers.Statistic
 # for upload resource
 POST        /uploadresource/gettk                          controllers.UploadResourceController.getUploadToken()
 POST        /uploadresource/finishcallback                 controllers.UploadResourceController.uploadFinishCallback()
+POST        /uploadresource/prepareupload                  controllers.UploadResourceController.prepareUpload()
 
 # for auth
 GET         /auth/preparebind/:mac                         controllers.AuthController.isMacBind(mac: String)
