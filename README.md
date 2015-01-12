@@ -19,7 +19,8 @@ cd conf/
 cp redis.conf.example redis.conf
 cp backend.conf.example backend.conf
 cd ..
-activator start # for production deployment
+activator # for production deployment
+[darfoo-play] $ start port # default to 9000
 ```
 
 * realize the mysql configuration in $PATH
