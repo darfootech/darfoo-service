@@ -43,8 +43,8 @@ public class Global extends GlobalSettings {
     public Action onRequest(Http.Request request, Method method) {
         System.out.println("request uri -> " + request.uri());
         System.out.println("request method -> " + method.getName());
-        System.out.println("request remoteaddress -> " + request.remoteAddress());
-        System.out.println("request clientAddress -> " + request.headers().get("X-Forwarded-For"));
+        /*System.out.println("request remoteaddress -> " + request.remoteAddress());
+        System.out.println("request clientAddress -> " + request.headers().get("X-Forwarded-For"));*/
         System.out.println("request date -> " + TimeUtils.timestamp2datetime());
         return super.onRequest(request, method);
     }
