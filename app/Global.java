@@ -4,6 +4,7 @@ import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
+import utils.TimeUtils;
 
 import java.lang.reflect.Method;
 
@@ -44,6 +45,7 @@ public class Global extends GlobalSettings {
         System.out.println("request method -> " + method.getName());
         System.out.println("request remoteaddress -> " + request.remoteAddress());
         System.out.println("request clientAddress -> " + request.headers().get("X-Forwarded-For"));
+        System.out.println("request date -> " + TimeUtils.timestamp2datetime());
         return super.onRequest(request, method);
     }
 }
