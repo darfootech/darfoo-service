@@ -15,6 +15,7 @@ create table menu (
   id                        bigint auto_increment not null,
   mac                       varchar(255),
   hostip                    varchar(255),
+  uuid                      varchar(255),
   menuid                    integer,
   clickcount                bigint,
   constraint pk_menu primary key (id))
@@ -24,6 +25,7 @@ create table menu_time (
   id                        bigint auto_increment not null,
   mac                       varchar(255),
   hostip                    varchar(255),
+  uuid                      varchar(255),
   menuid                    integer,
   timestamp                 bigint,
   due_date                  datetime,

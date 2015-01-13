@@ -22,6 +22,9 @@ public class Menu extends Model {
     @Constraints.Required
     private String hostip;
 
+    @Constraints.Required
+    private String uuid;
+
     /**
      * 数字增长从左到有从上到下递增
      */
@@ -31,9 +34,10 @@ public class Menu extends Model {
     @Constraints.Required
     private Long clickcount;
 
-    public Menu(String mac, String hostip, int menuid, Long clickcount) {
+    public Menu(String mac, String hostip, String uuid, int menuid, Long clickcount) {
         this.mac = mac;
         this.hostip = hostip;
+        this.uuid = uuid;
         this.menuid = menuid;
         this.clickcount = clickcount;
     }
@@ -41,6 +45,14 @@ public class Menu extends Model {
     public static Finder<Long, Menu> find = new Finder<Long, Menu>(
             Long.class, Menu.class
     );
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public Long getId() {
         return id;

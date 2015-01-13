@@ -25,6 +25,9 @@ public class MenuTime extends Model {
     @Constraints.Required
     public String hostip;
 
+    @Constraints.Required
+    private String uuid;
+
     /**
      * 数字增长从左到有从上到下递增
      */
@@ -37,9 +40,10 @@ public class MenuTime extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date dueDate = new Date();
 
-    public MenuTime(String mac, String hostip, int menuid) {
+    public MenuTime(String mac, String hostip, String uuid, int menuid) {
         this.mac = mac;
         this.hostip = hostip;
+        this.uuid = uuid;
         this.menuid = menuid;
     }
 }

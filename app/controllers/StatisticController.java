@@ -37,8 +37,8 @@ public class StatisticController extends Controller {
 
     /*for menu statistics*/
     //http://localhost:9000/statistics/menu/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
-    public static Result menu(Integer id, String mac, String host){
-        StatisticUtils.insertOrUpdateMenu(mac, host, id);
+    public static Result menu(Integer id, String mac, String host, String uuid){
+        StatisticUtils.insertOrUpdateMenu(mac, host, uuid, id);
         return ok();
     }
     /*end of menu statistics*/

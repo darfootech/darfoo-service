@@ -16,8 +16,9 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 int menuid = 3;
-                Menu menu = new Menu(macaddress, hostip, menuid, 0L);
+                Menu menu = new Menu(macaddress, hostip, uuid, menuid, 0L);
                 menu.save();
             }
         });
@@ -30,13 +31,14 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 int menuid = 3;
-                Menu menu = Ebean.find(Menu.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("menuid", menuid).findUnique();
+                Menu menu = Ebean.find(Menu.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("uuid", uuid).eq("menuid", menuid).findUnique();
 
                 if (menu != null){
                     menu.updateClickcount();
                 }else{
-                    Menu newMenu = new Menu(macaddress, hostip, menuid, 0L);
+                    Menu newMenu = new Menu(macaddress, hostip, uuid, menuid, 0L);
                     newMenu.save();
                 }
             }
@@ -50,8 +52,9 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 int menuid = 3;
-                MenuTime menuTime = new MenuTime(macaddress, hostip, menuid);
+                MenuTime menuTime = new MenuTime(macaddress, hostip, uuid, menuid);
                 menuTime.save();
             }
         });

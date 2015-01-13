@@ -7,17 +7,17 @@ import models.statistics.*;
  * Created by zjh on 15-1-8.
  */
 public class StatisticUtils {
-    public static void insertOrUpdateMenu(String macaddress, String hostip, int menuid){
-        Menu menu = Ebean.find(Menu.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("menuid", menuid).findUnique();
+    public static void insertOrUpdateMenu(String macaddress, String hostip, String uuid, int menuid){
+        Menu menu = Ebean.find(Menu.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("uuid", uuid).eq("menuid", menuid).findUnique();
 
         if (menu != null){
             menu.updateClickcount();
         }else{
-            Menu newMenu = new Menu(macaddress, hostip, menuid, 1L);
+            Menu newMenu = new Menu(macaddress, hostip, uuid, menuid, 1L);
             newMenu.save();
         }
 
-        MenuTime menuTime = new MenuTime(macaddress, hostip, menuid);
+        MenuTime menuTime = new MenuTime(macaddress, hostip, uuid, menuid);
         menuTime.save();
     }
 
