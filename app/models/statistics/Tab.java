@@ -21,6 +21,9 @@ public class Tab extends Model {
     @Constraints.Required
     private String hostip;
 
+    @Constraints.Required
+    private String uuid;
+
     /**
      * 数字增长从左到右
      */
@@ -30,11 +33,20 @@ public class Tab extends Model {
     @Constraints.Required
     private Long clickcount;
 
-    public Tab(String mac, String hostip, int tabid, Long clickcount) {
+    public Tab(String mac, String hostip, String uuid, int tabid, Long clickcount) {
         this.mac = mac;
         this.hostip = hostip;
+        this.uuid = uuid;
         this.tabid = tabid;
         this.clickcount = clickcount;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public Long getId() {

@@ -49,7 +49,9 @@ GET         /statistics/author/:id/m/:mac/h/:host/u/:uuid          controllers.S
 
 # for menu
 GET         /statistics/menu/:id/m/:mac/h/:host/u/:uuid            controllers.StatisticController.menu(id: Integer, mac: String, host: String, uuid: String)
-GET         /statistics/tab/:id/m/:mac/h/:host                     controllers.StatisticController.tab(id: Integer, mac: String, host: String)
+
+# for tab
+GET         /statistics/tab/:id/m/:mac/h/:host/u/:uuid             controllers.StatisticController.tab(id: Integer, mac: String, host: String, uuid: String)
 
 # for upload resource
 POST        /uploadresource/gettk                                  controllers.UploadResourceController.getUploadToken()

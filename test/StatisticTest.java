@@ -67,8 +67,9 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 int tabid = 3;
-                Tab tab = new Tab(macaddress, hostip, tabid, 0L);
+                Tab tab = new Tab(macaddress, hostip, uuid, tabid, 0L);
                 tab.save();
             }
         });
@@ -81,13 +82,14 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685-wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 int tabid = 3;
-                Tab tab = Ebean.find(Tab.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("tabid", tabid).findUnique();
+                Tab tab = Ebean.find(Tab.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("uuid", uuid).eq("tabid", tabid).findUnique();
 
                 if (tab != null){
                     tab.updateClickcount();
                 }else{
-                    Tab newTab = new Tab(macaddress, hostip, tabid, 0L);
+                    Tab newTab = new Tab(macaddress, hostip, uuid, tabid, 0L);
                     newTab.save();
                 }
             }
@@ -101,8 +103,9 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 int tabid = 3;
-                TabTime tabTime = new TabTime(macaddress, hostip, tabid);
+                TabTime tabTime = new TabTime(macaddress, hostip, uuid, tabid);
                 tabTime.save();
             }
         });

@@ -59,6 +59,7 @@ create table tab (
   id                        bigint auto_increment not null,
   mac                       varchar(255),
   hostip                    varchar(255),
+  uuid                      varchar(255),
   tabid                     integer,
   clickcount                bigint,
   constraint pk_tab primary key (id))
@@ -68,6 +69,7 @@ create table tab_time (
   id                        bigint auto_increment not null,
   mac                       varchar(255),
   hostip                    varchar(255),
+  uuid                      varchar(255),
   tabid                     integer,
   timestamp                 bigint,
   due_date                  datetime,

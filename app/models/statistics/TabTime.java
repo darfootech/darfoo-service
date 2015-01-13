@@ -23,6 +23,9 @@ public class TabTime extends Model {
     @Constraints.Required
     public String hostip;
 
+    @Constraints.Required
+    private String uuid;
+
     /**
      * 数字增长从左到右
      */
@@ -35,9 +38,10 @@ public class TabTime extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date dueDate = new Date();
 
-    public TabTime(String mac, String hostip, int tabid) {
+    public TabTime(String mac, String hostip, String uuid, int tabid) {
         this.mac = mac;
         this.hostip = hostip;
+        this.uuid = uuid;
         this.tabid = tabid;
     }
 }

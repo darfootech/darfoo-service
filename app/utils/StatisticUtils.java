@@ -21,17 +21,17 @@ public class StatisticUtils {
         menuTime.save();
     }
 
-    public static void insertOrUpdateTab(String macaddress, String hostip, int tabid){
-        Tab tab = Ebean.find(Tab.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("tabid", tabid).findUnique();
+    public static void insertOrUpdateTab(String macaddress, String hostip, String uuid, int tabid){
+        Tab tab = Ebean.find(Tab.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("uuid", uuid).eq("tabid", tabid).findUnique();
 
         if (tab != null){
             tab.updateClickcount();
         }else{
-            Tab newTab = new Tab(macaddress, hostip, tabid, 1L);
+            Tab newTab = new Tab(macaddress, hostip, uuid, tabid, 1L);
             newTab.save();
         }
 
-        TabTime tabTime = new TabTime(macaddress, hostip, tabid);
+        TabTime tabTime = new TabTime(macaddress, hostip, uuid, tabid);
         tabTime.save();
     }
 

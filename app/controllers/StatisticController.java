@@ -45,8 +45,8 @@ public class StatisticController extends Controller {
 
     /*for tab statistics*/
     //http://localhost:9000/statistics/tab/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
-    public static Result tab(Integer id, String mac, String host){
-        StatisticUtils.insertOrUpdateTab(mac, host, id);
+    public static Result tab(Integer id, String mac, String host, String uuid){
+        StatisticUtils.insertOrUpdateTab(mac, host, uuid, id);
         return ok();
     }
     /*end of tab statistics*/
