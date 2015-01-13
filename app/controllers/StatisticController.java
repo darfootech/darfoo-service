@@ -11,26 +11,26 @@ public class StatisticController extends Controller {
 
     /*for resource statistics*/
     //http://localhost:9000/statistics/video/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
-    public static Result singleVideo(Integer id, String mac, String host){
-        StatisticUtils.insertOrUpdateResource(mac, host, "video", id);
+    public static Result singleVideo(Integer id, String mac, String host, String uuid){
+        StatisticUtils.insertOrUpdateResource(mac, host, "video", uuid, id);
         return ok();
     }
 
     //http://localhost:9000/statistics/tutorial/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
-    public static Result singleTutorial(Integer id, String mac, String host){
-        StatisticUtils.insertOrUpdateResource(mac, host, "tutorial", id);
+    public static Result singleTutorial(Integer id, String mac, String host, String uuid){
+        StatisticUtils.insertOrUpdateResource(mac, host, "tutorial", uuid, id);
         return ok();
     }
 
     //http://localhost:9000/statistics/music/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
-    public static Result singleMusic(Integer id, String mac, String host){
-        StatisticUtils.insertOrUpdateResource(mac, host, "music", id);
+    public static Result singleMusic(Integer id, String mac, String host, String uuid){
+        StatisticUtils.insertOrUpdateResource(mac, host, "music", uuid, id);
         return ok();
     }
 
     //http://localhost:9000/statistics/author/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
-    public static Result singleAuthor(Integer id, String mac, String host){
-        StatisticUtils.insertOrUpdateResource(mac, host, "author", id);
+    public static Result singleAuthor(Integer id, String mac, String host, String uuid){
+        StatisticUtils.insertOrUpdateResource(mac, host, "author", uuid, id);
         return ok();
     }
     /*end of resource statistics*/

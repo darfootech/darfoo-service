@@ -35,17 +35,17 @@ public class StatisticUtils {
         tabTime.save();
     }
 
-    public static void insertOrUpdateResource(String macaddress, String hostip, String resourcetype, int resourceid){
-        Resource resource = Ebean.find(Resource.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("type", resourcetype).eq("resourceid", resourceid).findUnique();
+    public static void insertOrUpdateResource(String macaddress, String hostip, String resourcetype, String uuid, int resourceid){
+        Resource resource = Ebean.find(Resource.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("type", resourcetype).eq("uuid", uuid).eq("resourceid", resourceid).findUnique();
 
         if (resource != null){
             resource.updateClickcount();
         }else{
-            Resource newResource = new Resource(macaddress, hostip, resourcetype, resourceid, 1L);
+            Resource newResource = new Resource(macaddress, hostip, resourcetype, uuid, resourceid, 1L);
             newResource.save();
         }
 
-        ResourceTime resourceTime = new ResourceTime(macaddress, hostip, resourcetype, resourceid);
+        ResourceTime resourceTime = new ResourceTime(macaddress, hostip, resourcetype, uuid, resourceid);
         resourceTime.save();
     }
 }

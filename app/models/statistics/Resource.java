@@ -21,6 +21,9 @@ public class Resource extends Model {
     @Constraints.Required
     private String hostip;
 
+    @Constraints.Required
+    private String uuid;
+
     /**
      * video tutorial music author
      */
@@ -33,10 +36,11 @@ public class Resource extends Model {
     @Constraints.Required
     private Long clickcount;
 
-    public Resource(String mac, String hostip, String type, Integer resourceid, Long clickcount) {
+    public Resource(String mac, String hostip, String type, String uuid, Integer resourceid, Long clickcount) {
         this.mac = mac;
         this.hostip = hostip;
         this.type = type;
+        this.uuid = uuid;
         this.resourceid = resourceid;
         this.clickcount = clickcount;
     }
@@ -44,6 +48,14 @@ public class Resource extends Model {
     public static Finder<Long, Resource> find = new Finder<Long, Resource>(
             Long.class, Resource.class
     );
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public Long getId() {
         return id;

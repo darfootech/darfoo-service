@@ -23,6 +23,9 @@ public class ResourceTime extends Model {
     @Constraints.Required
     public String hostip;
 
+    @Constraints.Required
+    private String uuid;
+
     /**
      * video tutorial music author
      */
@@ -38,10 +41,11 @@ public class ResourceTime extends Model {
     @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
     public Date dueDate = new Date();
 
-    public ResourceTime(String mac, String hostip, String type, Integer resourceid) {
+    public ResourceTime(String mac, String hostip, String type, String uuid, Integer resourceid) {
         this.mac = mac;
         this.hostip = hostip;
         this.type = type;
+        this.uuid = uuid;
         this.resourceid = resourceid;
     }
 }

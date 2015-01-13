@@ -115,9 +115,10 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 String resourcetype = "video";
                 int resourceid = 333;
-                Resource resource = new Resource(macaddress, hostip, resourcetype, resourceid, 0L);
+                Resource resource = new Resource(macaddress, hostip, resourcetype, uuid, resourceid, 0L);
                 resource.save();
             }
         });
@@ -130,14 +131,15 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 String resourcetype = "video";
                 int resourceid = 3;
-                Resource resource = Ebean.find(Resource.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("type", resourcetype).eq("resourceid", resourceid).findUnique();
+                Resource resource = Ebean.find(Resource.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("type", resourcetype).eq("uuid", uuid).eq("resourceid", resourceid).findUnique();
 
                 if (resource != null){
                     resource.updateClickcount();
                 }else{
-                    Resource newResource = new Resource(macaddress, hostip, resourcetype, resourceid, 0L);
+                    Resource newResource = new Resource(macaddress, hostip, resourcetype, uuid, resourceid, 0L);
                     newResource.save();
                 }
             }
@@ -151,9 +153,10 @@ public class StatisticTest {
             public void run() {
                 String macaddress = "00:ad:05:01:a6:85";
                 String hostip = "fe80::2ad:5ff:fe01:a685%wlan0";
+                String uuid = "00000000-7174-e6c6-0033-c5870033c587";
                 String resourcetype = "video";
                 int resourceid = 333;
-                ResourceTime resourceTime = new ResourceTime(macaddress, hostip, resourcetype, resourceid);
+                ResourceTime resourceTime = new ResourceTime(macaddress, hostip, resourcetype, uuid, resourceid);
                 resourceTime.save();
             }
         });
