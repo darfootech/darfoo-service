@@ -50,6 +50,7 @@ public class UploadResourceController extends Controller {
 
     /**
      * launcher上传视频之前要先确定上传的video标识也就是名字加后缀是否已经存在了
+     * videokey为文件名-mac地址的格式防止冲突.后缀
      * @return
      */
     public static Result prepareUpload(){
@@ -101,6 +102,37 @@ public class UploadResourceController extends Controller {
             result.put("status", "none");
             return ok(Json.toJson(result));
         }
+    }
+
+    /*without auth 第一版自动批量上传暂时不用用户名密码作为上传权限限制，但是需要把mac地址放在文件名之后*/
+    public static Result getUploadTokenNoAuth(){
+        Map<String, Object> result = new HashMap<String, Object>();
+        String token = QiniuUtils.getToken();
+        System.out.println("origin token -> " + token);
+        String encryptToken = CryptUtils.base64EncodeStr(token);
+        result.put("tk", encryptToken);
+        return ok(Json.toJson(result));
+    }
+
+    /**
+     * videokey为文件名-时间戳-mac地址的格式防止冲突.后缀
+     * @return
+     */
+    public static Result uploadFinishCallbackNoAuth(){
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        DynamicForm form = Form.form().bindFromRequest();
+        String videokey = form.get("videokey");
+
+        System.out.println("videokey -> " + videokey);
+
+        String requestUrl = baseUrl + "/uploadresource/finishcallback";
+
+        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+        urlParameters.add(new BasicNameValuePair("videokey", videokey));
+
+        String response = new HttpUtils().postRequest(requestUrl, urlParameters);
+        return ok(response);
     }
 }
 

@@ -58,6 +58,10 @@ POST        /uploadresource/gettk                                  controllers.U
 POST        /uploadresource/finishcallback                         controllers.UploadResourceController.uploadFinishCallback()
 POST        /uploadresource/prepareupload                          controllers.UploadResourceController.prepareUpload()
 
+# for upload resource without auth
+GET         /uploadresource/gettkna                                controllers.UploadResourceController.getUploadTokenNoAuth()
+POST        /uploadresource/finishcallbackna                       controllers.UploadResourceController.uploadFinishCallbackNoAuth()
+
 # for auth
 GET         /auth/preparebind/:mac                                 controllers.AuthController.isMacBind(mac: String)
 POST        /auth/newbind                                          controllers.AuthController.bindMac()
