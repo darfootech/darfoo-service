@@ -29,4 +29,12 @@ public class CryptUtils {
         System.out.println("decode result -> " + s);
         return s;
     }
+
+    public static String encryptQiniuUrl(String originurl){
+        return base64EncodeStr(base64EncodeStr(base64EncodeStr(originurl)));
+    }
+
+    public static String decryptQiniuUrl(String crypturl){
+        return base64DecodeStr(base64DecodeStr(base64DecodeStr(crypturl)));
+    }
 }

@@ -126,7 +126,7 @@ public class UploadResourceController extends Controller {
 
         System.out.println("videokey -> " + videokey);
 
-        String requestUrl = baseUrl + "/uploadresource/finishcallback";
+        String requestUrl = baseUrl + "/uploadresource/finishcallbackna";
 
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
         urlParameters.add(new BasicNameValuePair("videokey", videokey));
