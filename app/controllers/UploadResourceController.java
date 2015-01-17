@@ -119,10 +119,9 @@ public class UploadResourceController extends Controller {
      * @return
      */
     public static Result uploadFinishCallbackNoAuth(){
-        Map<String, Object> result = new HashMap<String, Object>();
-
         DynamicForm form = Form.form().bindFromRequest();
         String videokey = form.get("videokey");
+        String imagekey = form.get("imagekey");
 
         System.out.println("videokey -> " + videokey);
 
@@ -130,6 +129,7 @@ public class UploadResourceController extends Controller {
 
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
         urlParameters.add(new BasicNameValuePair("videokey", videokey));
+        urlParameters.add(new BasicNameValuePair("imagekey", imagekey));
 
         String response = new HttpUtils().postRequest(requestUrl, urlParameters);
         return ok(response);
