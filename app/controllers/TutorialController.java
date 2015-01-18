@@ -84,6 +84,42 @@ public class TutorialController extends Controller {
         }
     }
 
+    public static Result categoryByPage(String category, Integer page){
+        Jedis jedis = null;
+        try {
+            String key = "tutorialcategory" + category + "page" + page;
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)){
+                //return redirect(baseUrl + "/cache/tutorial/category/" + category);
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/tutorial/category/" + category + "/page/" + page);
+                if (statuscode == 200){
+                    List<String> latestVideos = jedis.lrange(key, 0L, -1L);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String vkey : latestVideos){
+                        Map<String, String> video = jedis.hgetAll(vkey);
+                        result.add(video);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
+            }else{
+                List<String> latestVideos = jedis.lrange(key, 0L, -1L);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String vkey : latestVideos){
+                    Map<String, String> video = jedis.hgetAll(vkey);
+                    result.add(video);
+                }
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
     public static Result search(String content){
         Jedis jedis = null;
         try {
