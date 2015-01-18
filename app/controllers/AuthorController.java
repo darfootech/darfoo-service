@@ -8,6 +8,7 @@ import play.mvc.Result;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import utils.HttpUtils;
+import utils.PageUtils;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -109,6 +110,48 @@ public class AuthorController extends Controller {
                     Map<String, String> item = jedis.hgetAll(ikey);
                     result.add(item);
                 }
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public static Result getVideosByPage(Long id, Integer page){
+        Jedis jedis = null;
+
+        long start = (page-1) * PageUtils.videopagesize;
+        long end = page * PageUtils.videopagesize - 1;
+
+        try {
+            String key = "authorvideos" + id + "page";
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)){
+                //return redirect(baseUrl + "/cache/author/videos/" + id);
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/author/videos/" + id + "/page/" + page);
+                if (statuscode == 200){
+                    List<String> keys = jedis.lrange(key, start, end);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String ikey : keys){
+                        Map<String, String> item = jedis.hgetAll(ikey);
+                        result.add(item);
+                    }
+                    System.out.println("videolist size -> " + result.size());
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
+            }else{
+                List<String> keys = jedis.lrange(key, start, end);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String ikey : keys){
+                    Map<String, String> item = jedis.hgetAll(ikey);
+                    result.add(item);
+                }
+                System.out.println("videolist size -> " + result.size());
                 return ok(Json.toJson(result));
             }
         }catch (Exception e){

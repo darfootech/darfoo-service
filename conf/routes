@@ -35,6 +35,7 @@ GET         /resources/music/search/:content                       controllers.M
 GET         /resources/author/index                                controllers.AuthorController.indexAuthors()
 GET         /resources/author/:id                                  controllers.AuthorController.singleAuthor(id: Long)
 GET         /resources/author/videos/:id                           controllers.AuthorController.getVideos(id: Long)
+GET         /resources/author/videos/:id/page/:page                controllers.AuthorController.getVideosByPage(id: Long, page: Integer)
 GET         /resources/author/search/:content                      controllers.AuthorController.search(content: String)
 
 GET         /resources/version/latest                              controllers.VersionController.getLatestVersion()
