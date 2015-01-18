@@ -84,6 +84,42 @@ public class AuthorController extends Controller {
         }
     }
 
+    public static Result indexAuthorsByPage(Integer page){
+        Jedis jedis = null;
+        try {
+            String rediskey = "authorindexpage" + page;
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(rediskey)){
+                //return redirect(baseUrl + "/cache/author/index");
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/author/index/page/" + page);
+                if (statuscode == 200){
+                    List<String> keys = jedis.lrange(rediskey, 0L, -1L);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String key : keys){
+                        Map<String, String> item = jedis.hgetAll(key);
+                        result.add(item);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
+            }else{
+                List<String> keys = jedis.lrange(rediskey, 0L, -1L);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String key : keys){
+                    Map<String, String> item = jedis.hgetAll(key);
+                    result.add(item);
+                }
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
     public static Result getVideos(Long id){
         Jedis jedis = null;
         try {
