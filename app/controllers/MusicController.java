@@ -8,6 +8,7 @@ import play.mvc.Result;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import utils.HttpUtils;
+import utils.PageUtils;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -177,6 +178,46 @@ public class MusicController extends Controller {
                 }
             }else{
                 Set<String> latestVideos = jedis.smembers(key);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String vkey : latestVideos){
+                    Map<String, String> video = jedis.hgetAll(vkey);
+                    result.add(video);
+                }
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public static Result searchByPage(String content, Integer page){
+        Jedis jedis = null;
+
+        long start = (page-1) * PageUtils.musicpagesize;
+        long end = page * PageUtils.musicpagesize - 1;
+
+        try {
+            String key = "musicsearch" + content + "page";
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)){
+                //return redirect(baseUrl + "/cache/music/search?search=" + URLEncoder.encode(content, "utf-8"));
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/music/search/page/" + page + "?search=" + URLEncoder.encode(content, "utf-8"));
+                if (statuscode == 200){
+                    List<String> latestVideos = jedis.lrange(key, start, end);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String vkey : latestVideos){
+                        Map<String, String> video = jedis.hgetAll(vkey);
+                        result.add(video);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
+            }else{
+                List<String> latestVideos = jedis.lrange(key, start, end);
                 List<Map<String, String>> result = new ArrayList<Map<String, String>>();
                 for (String vkey : latestVideos){
                     Map<String, String> video = jedis.hgetAll(vkey);

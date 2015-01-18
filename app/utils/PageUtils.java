@@ -5,4 +5,5 @@ package utils;
  */
 public class PageUtils {
     public static int videopagesize = 12;
+    public static int musicpagesize = 22;
 }
