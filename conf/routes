@@ -20,6 +20,7 @@ GET         /resources/video/index                                 controllers.V
 GET         /resources/video/recommend                             controllers.VideoController.recommendVideos()
 GET         /resources/video/:id                                   controllers.VideoController.singleVideo(id: Long)
 GET         /resources/video/category/:category                    controllers.VideoController.category(category: String)
+GET         /resources/video/category/:category/page/:page         controllers.VideoController.categoryByPage(category: String, page: Integer)
 GET         /resources/video/music/:id                             controllers.VideoController.getMusic(id: Long)
 GET         /resources/video/search/:content                       controllers.VideoController.search(content: String)
 

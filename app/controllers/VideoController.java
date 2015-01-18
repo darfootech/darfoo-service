@@ -156,6 +156,41 @@ public class VideoController extends Controller {
         }
     }
 
+    public static Result categoryByPage(String category, Integer page){
+        Jedis jedis = null;
+        try {
+            String key = "videocategory" + category + "page" + page;
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)){
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/video/category/" + category + "/page/" + page);
+                if (statuscode == 200){
+                    List<String> latestVideos = jedis.lrange(key, 0L, -1L);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String vkey : latestVideos){
+                        Map<String, String> video = jedis.hgetAll(vkey);
+                        result.add(video);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
+            }else{
+                List<String> latestVideos = jedis.lrange(key, 0L, -1L);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String vkey : latestVideos){
+                    Map<String, String> video = jedis.hgetAll(vkey);
+                    result.add(video);
+                }
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
     public static Result getMusic(Long id){
         Jedis jedis = null;
         try {
