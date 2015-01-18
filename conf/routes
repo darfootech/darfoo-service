@@ -31,6 +31,7 @@ GET         /resources/tutorial/search/:content                      controllers
 
 GET         /resources/music/hottest                                 controllers.MusicController.hottestMusic()
 GET         /resources/music/category/:category                      controllers.MusicController.category(category: String)
+GET         /resources/music/category/:category/page/:page        controllers.MusicController.categoryByPage(category: String, page: Integer)
 GET         /resources/music/:id                                     controllers.MusicController.singleMusic(id: Long)
 GET         /resources/music/search/:content                         controllers.MusicController.search(content: String)
 
