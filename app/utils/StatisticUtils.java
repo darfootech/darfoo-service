@@ -53,7 +53,7 @@ public class StatisticUtils {
     }
 
     public static void updateClickHottest(String type, Integer id){
-        System.out.println(baseUrl + "/resources/" + type + "/" + id);
+        //System.out.println(baseUrl + "/resources/" + type + "/" + id);
         int statuscode = new HttpUtils().sendStatisticRequest(baseUrl + "/resources/" + type + "/" + id);
     }
 }
