@@ -40,6 +40,23 @@ public class HttpUtils {
         }
     }
 
+    public int sendStatisticRequest(String backendUrl){
+        if (httpClient == null){
+            httpClient = new DefaultHttpClient();
+        }
+
+        HttpGet request = new HttpGet(backendUrl);
+
+        try {
+            HttpResponse response = httpClient.execute(request);
+            int statuscode = response.getStatusLine().getStatusCode();
+            return statuscode;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 500;
+        }
+    }
+
     public String getRequest(String backendUrl){
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(backendUrl);

@@ -2,11 +2,14 @@ package utils;
 
 import com.avaje.ebean.Ebean;
 import models.statistics.*;
+import persistence.BackendManager;
 
 /**
  * Created by zjh on 15-1-8.
  */
 public class StatisticUtils {
+    static String baseUrl = BackendManager.getBackendBaseUrl();
+
     public static void insertOrUpdateMenu(String macaddress, String hostip, String uuid, int menuid){
         Menu menu = Ebean.find(Menu.class).where().eq("mac", macaddress).eq("hostip", hostip).eq("uuid", uuid).eq("menuid", menuid).findUnique();
 
@@ -47,5 +50,10 @@ public class StatisticUtils {
 
         ResourceTime resourceTime = new ResourceTime(macaddress, hostip, resourcetype, uuid, resourceid);
         resourceTime.save();
+    }
+
+    public static void updateClickHottest(String type, Integer id){
+        System.out.println(baseUrl + "/resources/" + type + "/" + id);
+        int statuscode = new HttpUtils().sendStatisticRequest(baseUrl + "/resources/" + type + "/" + id);
     }
 }

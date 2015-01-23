@@ -13,18 +13,21 @@ public class StatisticController extends Controller {
     //http://localhost:9000/statistics/video/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
     public static Result singleVideo(Integer id, String mac, String host, String uuid){
         StatisticUtils.insertOrUpdateResource(mac, host, "video", uuid, id);
+        StatisticUtils.updateClickHottest("video", id);
         return ok();
     }
 
     //http://localhost:9000/statistics/tutorial/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
     public static Result singleTutorial(Integer id, String mac, String host, String uuid){
         StatisticUtils.insertOrUpdateResource(mac, host, "tutorial", uuid, id);
+        StatisticUtils.updateClickHottest("video/tutorial", id);
         return ok();
     }
 
     //http://localhost:9000/statistics/music/3/m/00:ad:05:01:a6:85/h/fe80::2ad:5ff:fe01:a685-wlan0
     public static Result singleMusic(Integer id, String mac, String host, String uuid){
         StatisticUtils.insertOrUpdateResource(mac, host, "music", uuid, id);
+        StatisticUtils.updateClickHottest("music", id);
         return ok();
     }
 
