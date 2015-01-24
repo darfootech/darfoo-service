@@ -55,6 +55,15 @@ create table resource_time (
   constraint pk_resource_time primary key (id))
 ;
 
+create table search (
+  id                        bigint auto_increment not null,
+  searchcontent             varchar(255),
+  searchtype                varchar(255),
+  timestamp                 bigint,
+  due_date                  datetime,
+  constraint pk_search primary key (id))
+;
+
 create table tab (
   id                        bigint auto_increment not null,
   mac                       varchar(255),
@@ -100,6 +109,8 @@ drop table menu_time;
 drop table resource;
 
 drop table resource_time;
+
+drop table search;
 
 drop table tab;
 

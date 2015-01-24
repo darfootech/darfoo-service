@@ -164,4 +164,17 @@ public class StatisticTest {
             }
         });
     }
+
+    @Test
+    public void insertSearchContent(){
+        running(fakeApplication(), new Runnable() {
+            @Override
+            public void run() {
+                String searchcontent = "cleantha";
+                String searchtype = "video";
+                Search search = new Search(searchcontent, searchtype);
+                search.save();
+            }
+        });
+    }
 }

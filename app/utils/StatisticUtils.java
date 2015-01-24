@@ -56,4 +56,9 @@ public class StatisticUtils {
         //System.out.println(baseUrl + "/resources/" + type + "/" + id);
         int statuscode = new HttpUtils().sendStatisticRequest(baseUrl + "/resources/" + type + "/" + id);
     }
+
+    public static void insertSearchContent(String searchcontent, String searchtype){
+        Search search = new Search(searchcontent, searchtype);
+        search.save();
+    }
 }
