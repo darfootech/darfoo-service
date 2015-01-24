@@ -9,6 +9,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import utils.HttpUtils;
 import utils.PageUtils;
+import utils.StatisticUtils;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -193,6 +194,8 @@ public class VideoController extends Controller {
     }
 
     public static Result getMusic(Long id){
+        StatisticUtils.updateClickHottest("video/getmusic", id.intValue());
+
         Jedis jedis = null;
         try {
             String key = "videomusic-" + id;
