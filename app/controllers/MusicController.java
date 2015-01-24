@@ -9,6 +9,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import utils.HttpUtils;
 import utils.PageUtils;
+import utils.StatisticUtils;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -159,6 +160,8 @@ public class MusicController extends Controller {
 
     public static Result search(String content){
         Jedis jedis = null;
+        StatisticUtils.insertSearchContent(content, "music");
+
         try {
             String key = "musicsearch" + content;
             jedis = jedisPool.getResource();
@@ -195,6 +198,7 @@ public class MusicController extends Controller {
 
     public static Result searchByPage(String content, Integer page){
         Jedis jedis = null;
+        StatisticUtils.insertSearchContent(content, "music");
 
         long start = (page-1) * PageUtils.musicpagesize;
         long end = page * PageUtils.musicpagesize - 1;

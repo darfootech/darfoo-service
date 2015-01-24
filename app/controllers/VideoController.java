@@ -225,6 +225,7 @@ public class VideoController extends Controller {
 
     public static Result search(String content){
         Jedis jedis = null;
+        StatisticUtils.insertSearchContent(content, "video");
         try {
             String key = "videosearch" + content;
             jedis = jedisPool.getResource();
@@ -261,6 +262,7 @@ public class VideoController extends Controller {
 
     public static Result searchByPage(String content, Integer page){
         Jedis jedis = null;
+        StatisticUtils.insertSearchContent(content, "video");
 
         long start = (page-1) * PageUtils.videopagesize;
         long end = page * PageUtils.videopagesize - 1;
