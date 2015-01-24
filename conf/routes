@@ -30,6 +30,7 @@ GET         /resources/tutorial/:id                                  controllers
 GET         /resources/tutorial/category/:category                   controllers.TutorialController.category(category: String)
 GET         /resources/tutorial/category/:category/page/:page        controllers.TutorialController.categoryByPage(category: String, page: Integer)
 GET         /resources/tutorial/search/:content                      controllers.TutorialController.search(content: String)
+GET         /resources/tutorial/sidebar/:id                          controllers.TutorialController.getSideBarTutorials(id: Integer)
 
 GET         /resources/music/hottest                                 controllers.MusicController.hottestMusic()
 GET         /resources/music/category/:category                      controllers.MusicController.category(category: String)
