@@ -38,6 +38,7 @@ GET         /resources/music/category/:category/page/:page           controllers
 GET         /resources/music/:id                                     controllers.MusicController.singleMusic(id: Long)
 GET         /resources/music/search/:content                         controllers.MusicController.search(content: String)
 GET         /resources/music/search/:content/page/:page              controllers.MusicController.searchByPage(content: String, page: Integer)
+GET         /resources/music/sidebar/:id                             controllers.MusicController.getSideBarMusics(id: Integer)
 
 GET         /resources/author/index                                  controllers.AuthorController.indexAuthors()
 GET         /resources/author/index/page/:page                       controllers.AuthorController.indexAuthorsByPage(page: Integer)

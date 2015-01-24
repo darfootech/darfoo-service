@@ -232,4 +232,39 @@ public class MusicController extends Controller {
             jedisPool.returnResource(jedis);
         }
     }
+
+    public static Result getSideBarMusics(Integer id){
+        Jedis jedis = null;
+        try {
+            String key = "musicsidebar" + id;
+            jedis = jedisPool.getResource();
+            if (!jedis.exists(key)){
+                int statuscode = new HttpUtils().sendCacheRequest(baseUrl + "/cache/music/sidebar/" + id);
+                if (statuscode == 200){
+                    List<String> sidebarmuiscs = jedis.lrange(key, 0L, -1L);
+                    List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                    for (String vkey : sidebarmuiscs){
+                        Map<String, String> video = jedis.hgetAll(vkey);
+                        result.add(video);
+                    }
+                    return ok(Json.toJson(result));
+                }else{
+                    return ok(Json.toJson("error"));
+                }
+            }else{
+                List<String> sidebarmuiscs = jedis.lrange(key, 0L, -1L);
+                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                for (String vkey : sidebarmuiscs){
+                    Map<String, String> video = jedis.hgetAll(vkey);
+                    result.add(video);
+                }
+                return ok(Json.toJson(result));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return badRequest("error");
+        }finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
 }
