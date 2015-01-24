@@ -24,6 +24,7 @@ GET         /resources/video/category/:category/page/:page           controllers
 GET         /resources/video/music/:id                               controllers.VideoController.getMusic(id: Long)
 GET         /resources/video/search/:content                         controllers.VideoController.search(content: String)
 GET         /resources/video/search/:content/page/:page              controllers.VideoController.searchByPage(content: String, page: Integer)
+GET         /resources/video/sidebar/:id                             controllers.VideoController.getSideBarVideos(id: Integer)
 
 GET         /resources/tutorial/:id                                  controllers.TutorialController.singleTutorial(id: Long)
 GET         /resources/tutorial/category/:category                   controllers.TutorialController.category(category: String)
