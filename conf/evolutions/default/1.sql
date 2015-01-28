@@ -7,6 +7,8 @@ create table bind (
   id                        bigint auto_increment not null,
   user_id                   bigint,
   mac                       varchar(255) not null,
+  timestamp                 bigint,
+  due_date                  datetime,
   constraint uq_bind_mac unique (mac),
   constraint pk_bind primary key (id))
 ;
@@ -89,6 +91,8 @@ create table user (
   id                        bigint auto_increment not null,
   username                  varchar(255) not null,
   password                  varchar(255),
+  timestamp                 bigint,
+  due_date                  datetime,
   constraint uq_user_username unique (username),
   constraint pk_user primary key (id))
 ;
