@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -77,11 +78,23 @@ public class HttpUtils {
     }
 
     public String postRequest(String backendUrl, List<NameValuePair> urlParameters){
-
         HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(backendUrl);
 
         try {
+            client.getParams().setParameter("http.protocol.content-charset",HTTP.UTF_8);
+            client.getParams().setParameter(HTTP.CONTENT_ENCODING, HTTP.UTF_8);
+            client.getParams().setParameter(HTTP.CHARSET_PARAM, HTTP.UTF_8);
+            client.getParams().setParameter(HTTP.DEFAULT_PROTOCOL_CHARSET,HTTP.UTF_8);
+
+            // Post请求
+            HttpPost post = new HttpPost(backendUrl);
+
+            //设置post编码
+            post.getParams().setParameter("http.protocol.content-charset",HTTP.UTF_8);
+            post.getParams().setParameter(HTTP.CONTENT_ENCODING, HTTP.UTF_8);
+            post.getParams().setParameter(HTTP.CHARSET_PARAM, HTTP.UTF_8);
+            post.getParams().setParameter(HTTP.DEFAULT_PROTOCOL_CHARSET, HTTP.UTF_8);
+
             post.setEntity(new UrlEncodedFormEntity(urlParameters));
             HttpResponse response = client.execute(post);
             System.out.println("\nSending 'POST' request to URL : " + backendUrl);
