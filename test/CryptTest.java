@@ -18,4 +18,12 @@ public class CryptTest {
         String originid = CryptUtils.base64DecodeStr(CryptUtils.base64DecodeStr(rehash));
         System.out.println("origin id -> " + originid);
     }
+
+    @Test
+    public void cryptusernamepassword(){
+        String username = "username";
+        String password = "password";
+        System.out.println(CryptUtils.base64EncodeStr(username)); // -> dXNlcm5hbWU=
+        System.out.println(CryptUtils.base64EncodeStr(password)); // -> cGFzc3dvcmQ=
+    }
 }
