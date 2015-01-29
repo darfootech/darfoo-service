@@ -75,7 +75,7 @@ public class UserTest {
         running(fakeApplication(), new Runnable() {
             @Override
             public void run() {
-                String username = "cleantha333";
+                String username = "cleantha112233";
                 String password = CryptUtils.base64EncodeStr("pppppppp");
 
                 boolean flag = User.authenticate(username, password);

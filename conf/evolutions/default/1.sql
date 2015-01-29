@@ -13,6 +13,14 @@ create table bind (
   constraint pk_bind primary key (id))
 ;
 
+create table feed_back (
+  id                        bigint auto_increment not null,
+  user_id                   bigint,
+  username                  varchar(255),
+  feedback                  varchar(255),
+  constraint pk_feed_back primary key (id))
+;
+
 create table menu (
   id                        bigint auto_increment not null,
   mac                       varchar(255),
@@ -105,6 +113,8 @@ create table user (
 SET FOREIGN_KEY_CHECKS=0;
 
 drop table bind;
+
+drop table feed_back;
 
 drop table menu;
 
