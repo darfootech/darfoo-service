@@ -25,5 +25,14 @@ public class CryptTest {
         String password = "password";
         System.out.println(CryptUtils.base64EncodeStr(username)); // -> dXNlcm5hbWU=
         System.out.println(CryptUtils.base64EncodeStr(password)); // -> cGFzc3dvcmQ=
+
+        String realusername = "cleantha112233";
+        String realpassword = "pppppppp";
+        System.out.println(CryptUtils.base64EncodeStr(realusername)); // -> Y2xlYW50aGExMTIyMzM=
+        System.out.println(CryptUtils.base64EncodeStr(realpassword)); // -> cHBwcHBwcHA=
+
+        String realusername2 = "ccc333";
+        System.out.println(CryptUtils.base64EncodeStr(realusername2)); // -> Y2NjMzMz
+
     }
 }

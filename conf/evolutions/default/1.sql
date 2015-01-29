@@ -18,6 +18,8 @@ create table feed_back (
   user_id                   bigint,
   username                  varchar(255),
   feedback                  varchar(255),
+  timestamp                 bigint,
+  due_date                  datetime,
   constraint pk_feed_back primary key (id))
 ;
 

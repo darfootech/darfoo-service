@@ -1,10 +1,12 @@
 package models.auth;
 
+import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * Created by zjh on 15-1-29.
@@ -23,6 +25,12 @@ public class FeedBack extends Model {
 
     @Constraints.Required
     private String feedback;
+
+    @Constraints.Required
+    public Long timestamp = System.currentTimeMillis() / 1000;
+
+    @Formats.DateTime(pattern="yyyy-MM-dd HH:mm:ss")
+    public Date dueDate = new Date();
 
     public FeedBack(Long user_id, String username, String feedback) {
         this.user_id = user_id;

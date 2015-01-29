@@ -46,8 +46,8 @@ public class AuthController extends Controller {
     public static Result bindMac(){
         DynamicForm form = Form.form().bindFromRequest();
         String mac = form.get("mac");
-        String username = form.get("username");
-        String password = form.get("password");
+        String username = CryptUtils.base64DecodeStr(form.get("dXNlcm5hbWU="));
+        String password = form.get("cGFzc3dvcmQ=");
 
         Map<String, Object> result = new HashMap<String, Object>();
         //User user = Ebean.find(User.class).where().eq("username", username).eq("password", password).findUnique();

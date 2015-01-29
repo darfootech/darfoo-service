@@ -76,6 +76,7 @@ POST        /uploadresource/finishcallbackna                         controllers
 GET         /auth/preparebind/:mac                                   controllers.AuthController.isMacBind(mac: String)
 POST        /auth/newbind                                            controllers.AuthController.bindMac()
 POST        /auth/login                                              controllers.AuthController.login()
+POST        /auth/feedback                                           controllers.FeedBackController.getFeedBack
 
 # for share
 GET         /share/:type/:idhash                                     controllers.ShareController.shareResource(type: String, idhash: String)
