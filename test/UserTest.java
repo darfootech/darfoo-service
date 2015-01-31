@@ -13,7 +13,7 @@ import static play.test.Helpers.running;
  */
 public class UserTest {
     @Test
-    public void insertUser(){
+    public void insertUser() {
         running(fakeApplication(), new Runnable() {
             @Override
             public void run() {
@@ -23,7 +23,7 @@ public class UserTest {
                     User user = new User(username, password);
                     user.save();
                     System.out.println("insert id -> " + user.getId());
-                }catch (PersistenceException e){
+                } catch (PersistenceException e) {
                     System.out.println("duplicate username insert failed");
                 }
             }
@@ -31,17 +31,17 @@ public class UserTest {
     }
 
     @Test
-    public void isExistsUser(){
+    public void isExistsUser() {
         running(fakeApplication(), new Runnable() {
             @Override
             public void run() {
                 String username = "cleantha333";
                 String password = CryptUtils.base64EncodeStr("pppppppp");
                 User user = Ebean.find
-                (User.class).where().eq("username", username).eq("password", password).findUnique();
-                if (user != null){
+                        (User.class).where().eq("username", username).eq("password", password).findUnique();
+                if (user != null) {
                     System.out.println("用户已经存在");
-                }else{
+                } else {
                     System.out.println("用户不存在");
                 }
             }
@@ -49,7 +49,7 @@ public class UserTest {
     }
 
     @Test
-    public void bcryptInsertUser(){
+    public void bcryptInsertUser() {
         running(fakeApplication(), new Runnable() {
             @Override
             public void run() {
@@ -58,12 +58,12 @@ public class UserTest {
                     String password = CryptUtils.base64EncodeStr("pppppppp");
 
                     User user = User.create(username, password);
-                    if (user.getId() > 0){
+                    if (user.getId() > 0) {
                         System.out.println("insert successful");
-                    }else{
+                    } else {
                         System.out.println("insert failed");
                     }
-                }catch (PersistenceException e){
+                } catch (PersistenceException e) {
                     System.out.println("duplicate username");
                 }
             }
@@ -71,7 +71,7 @@ public class UserTest {
     }
 
     @Test
-    public void bcryptUserAuth(){
+    public void bcryptUserAuth() {
         running(fakeApplication(), new Runnable() {
             @Override
             public void run() {
@@ -79,9 +79,9 @@ public class UserTest {
                 String password = CryptUtils.base64EncodeStr("pppppppp");
 
                 boolean flag = User.authenticate(username, password);
-                if (flag){
+                if (flag) {
                     System.out.println("用户已经存在");
-                }else{
+                } else {
                     System.out.println("用户不存在");
                 }
             }

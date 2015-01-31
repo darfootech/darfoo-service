@@ -19,3 +19,4 @@ dist
 *.properties
 *.conf
 *.lock
+db/schema.rb
