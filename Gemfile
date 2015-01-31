@@ -1,4 +1,5 @@
 source 'https://ruby.taobao.org'
 
 gem 'standalone_migrations'
-gem 'activerecord-mysql-adapter'
+gem 'mysql2'
+#gem 'activerecord-mysql-adapter'

@@ -1,21 +1,21 @@
 development:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   database: darfoo
   pool: 5
   username: root
   password:
-  #socket: /var/run/mysqld/mysqld.sock
+  socket: /tmp/mysql.sock
 
 production:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   database: darfoo
   pool: 5
   username: root
-  password:
+  password: Cleantha@333
   socket: /var/run/mysqld/mysqld.sock
 
 test: &test

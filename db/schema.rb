@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150131031750) do
+ActiveRecord::Schema.define(:version => 0) do
 
   create_table "author", :force => true do |t|
     t.string  "DESCRIPTION",                             :null => false
@@ -212,7 +212,6 @@ ActiveRecord::Schema.define(:version => 20150131031750) do
     t.string   "password"
     t.integer  "timestamp", :limit => 8
     t.datetime "due_date"
-    t.string   "birthday"
   end
 
   add_index "user", ["username"], :name => "uq_user_username", :unique => true
