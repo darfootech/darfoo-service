@@ -54,7 +54,7 @@ public class AuthController extends Controller {
         boolean flag = User.authenticate(username, password);
         if (flag){
             System.out.println("用户已经存在");
-            result.put("status", "500");
+            result.put("status", 500);
             return ok(Json.toJson(result));
         }else{
             System.out.println("用户不存在");
@@ -65,15 +65,15 @@ public class AuthController extends Controller {
                 bind.save();
                 long bindid = bind.getId();
                 if (userid > 0 && bindid > 0){
-                    result.put("status", "200");
+                    result.put("status", 200);
                     return ok(Json.toJson(result));
                 }else{
-                    result.put("status", "501");
+                    result.put("status", 501);
                     return ok(Json.toJson(result));
                 }
             }catch (PersistenceException e){
                 System.out.println("duplicate username or mac insert failed");
-                result.put("status", "503");
+                result.put("status", 503);
                 return ok(Json.toJson(result));
 
             }
