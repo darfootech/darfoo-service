@@ -78,6 +78,10 @@ POST        /auth/newbind                                            controllers
 POST        /auth/login                                              controllers.AuthController.login()
 POST        /auth/feedback                                           controllers.FeedBackController.getFeedBack
 
+# for crashlog
+
+POST        /statistics/log                                          controllers.CrashLogController.newCrash()
+
 # for share
 GET         /share/:type/:idhash                                     controllers.ShareController.shareResource(type: String, idhash: String)
 
