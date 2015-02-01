@@ -95,7 +95,8 @@ public class HttpUtils {
             post.getParams().setParameter(HTTP.CHARSET_PARAM, HTTP.UTF_8);
             post.getParams().setParameter(HTTP.DEFAULT_PROTOCOL_CHARSET, HTTP.UTF_8);
 
-            post.setEntity(new UrlEncodedFormEntity(urlParameters));
+            post.setEntity(new UrlEncodedFormEntity(urlParameters, HTTP.UTF_8));
+            //post.setHeader("Content-Type", "text/json;charset=UTF-8");
             HttpResponse response = client.execute(post);
             System.out.println("\nSending 'POST' request to URL : " + backendUrl);
             System.out.println("Post parameters : " + post.getEntity());
