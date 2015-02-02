@@ -47,7 +47,8 @@ GET         /resources/author/videos/:id                             controllers
 GET         /resources/author/videos/:id/page/:page                  controllers.AuthorController.getVideosByPage(id: Long, page: Integer)
 GET         /resources/author/search/:content                        controllers.AuthorController.search(content: String)
 
-GET         /resources/version/latest                                controllers.VersionController.getLatestVersion()
+GET         /resources/version/latest                                controllers.VersionController.getLatestReleaseVersion()
+GET         /resources/version/debug/latest                          controllers.VersionController.getLatestDebugVersion()
 
 # for operation statistics
 

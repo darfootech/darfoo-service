@@ -20,9 +20,14 @@ import java.io.InputStreamReader;
 public class VersionController extends Controller {
     static String baseUrl = BackendManager.getBackendBaseUrl();
 
-    public static Result getLatestVersion(){
-        //return redirect(baseUrl + "/resources/version/latest");
+    public static Result getLatestReleaseVersion() {
         String requestUrl = baseUrl + "/resources/version/latest";
+        String response = new HttpUtils().getRequest(requestUrl);
+        return ok(response);
+    }
+
+    public static Result getLatestDebugVersion() {
+        String requestUrl = baseUrl + "/resources/version/debug/latest";
         String response = new HttpUtils().getRequest(requestUrl);
         return ok(response);
     }
