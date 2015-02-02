@@ -1,0 +1,6 @@
+include "application.conf"
+
+db.default.driver=com.mysql.jdbc.Driver
+db.default.url="jdbc:"${DATABASE_URL_DB}
+db.default.user=${DATABASE_USERNAME_DB}
+db.default.password=${DATABASE_PASSWORD_DB}

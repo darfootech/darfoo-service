@@ -20,3 +20,4 @@ dist
 *.conf
 *.lock
 db/schema.rb
+product.conf

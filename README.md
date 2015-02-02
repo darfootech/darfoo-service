@@ -21,6 +21,9 @@ cp backend.conf.example backend.conf
 cd ..
 activator # for production deployment
 [darfoo-play] $ start port # default to 9000
+
+cp product.conf.example product.conf
+./activator "run -Dhttp.port=9003 -Dconfig.resource=product.conf"
 ```
 
 * realize the mysql configuration in $PATH
