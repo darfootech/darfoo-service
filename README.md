@@ -42,6 +42,12 @@ export DATABASE_PASSWORD_DB=password
 
 aliyun上在一个地区可以直接用内网ip连接redis
 
+## database migration
+
+* rake db:new_migration name=migration_name -> db/migrate/migration_file.rb
+* rake db:migrate (rake db:migrate RAILS_ENV=production)
+* rake db:rollback (rake db:rollback RAILS_ENV=production)
+
 ## todo
 
 * use async controller integrate with akka
