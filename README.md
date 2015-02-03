@@ -23,7 +23,10 @@ activator # for production deployment
 [darfoo-play] $ start port # default to 9000
 
 cp product.conf.example product.conf
+# for development
 ./activator "run -Dhttp.port=9003 -Dconfig.resource=conf/product.conf"
+# for production
+./activator "start -Dhttp.port=9003 -Dconfig.file=conf/product.conf"
 ```
 
 * realize the mysql configuration in $PATH
