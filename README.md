@@ -23,6 +23,7 @@ activator # for production deployment
 [darfoo-play] $ start port # default to 9000
 
 cp product.conf.example product.conf
+# 在production环境下 如果product.conf中的密码有@这样的特殊字符 整个密码需要用双引号包裹住
 # for development
 ./activator "run -Dhttp.port=9003 -Dconfig.resource=conf/product.conf"
 # for production
