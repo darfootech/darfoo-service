@@ -21,3 +21,4 @@ dist
 *.lock
 db/schema.rb
 product.conf
+*.rdb
