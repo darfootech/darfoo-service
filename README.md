@@ -24,9 +24,9 @@ activator # for production deployment
 
 cp product.conf.example product.conf
 # 在production环境下 如果product.conf中的密码有@这样的特殊字符 整个密码需要用双引号包裹住
-# for development
+# for development (貌似下面run启动在ubuntu12.04LTS上ok 在maverick上就跪了 在mac上要run启动只能是把数据库配置写在application.conf文件里)
 ./activator "run -Dhttp.port=9003 -Dconfig.resource=conf/product.conf"
-# for production
+# for production (start启动在mac下是ok的而且也有实时log)
 ./activator "start -Dhttp.port=9003 -Dconfig.file=conf/product.conf"
 ```
 
